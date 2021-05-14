@@ -1,22 +1,20 @@
-E-Store ()
-Demo: 
-Cài đặt local:
-Install dependancies:
+### E-Shop
 
-npm install
+### Cài đặt local: 
+1. Install dependancies:
 
-Run:
-
-Development env:
-
-npm start
-
-Production env:
-
-npm start
-
-Team information
-STT	Name	Roles	Github
-1	Nguyễn Hữu Phát	@.🍉
-2	Đặng Ngọc Quang	@.🍑
-3	Đỗ Văn Sa	    @.🍐
+    `npm install`
+1. Run:
+   1. Development env:
+   
+      `npm run start-dev`
+   1. Production env:
+   
+      `npm run start-prod`
+      
+### Team infomation
+STT | Name | Roles | Github
+--- | ---- | ----- | ------
+1 | Nguyễn Hữu Phát|1 | [@.:watermelon:](https://github.com/)
+2 | Đặng Ngọc Quang | 2 | [@.:peach:](https://github.com/quang1410)
+3 | Đỗ Văn Sa | 3 | [@.:pear:](https://github.com/)
