@@ -7,10 +7,10 @@
 1. Run:
    1. Development env:
    
-      `npm run start-dev`
+      `npm start`
    1. Production env:
    
-      `npm run start-prod`
+      `npm start`
       
 ### Team infomation
 STT | Name | Roles | Github
