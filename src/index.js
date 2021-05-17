@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const hbs  = require('express-handlebars')
 const path = require('path')
-const route = require('./routes/index')
+const route = require('./routes')
 const app = express()
 const port = 3000
 
@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 //template engine
 app.engine('.hbs', hbs({extname: '.hbs'}))
 app.set('view engine', '.hbs')
-app.set('views',path.join(__dirname,'views'))//set views
+app.set('views',path.join(__dirname,'resources', 'views'))//set views
 
 //HTTP logger
 app.use(morgan('dev'))

@@ -1,17 +1,11 @@
-
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Breadcrumb Section Begin -->
+ <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Register</span>
+                        <span>Login</span>
                     </div>
                 </div>
             </div>
@@ -24,17 +18,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <div class="register-form">
-                        <h2>Register</h2>
-                        <form action="/register" method="post">
-                            <div class="group-input">
-                                <label for="firstname">First Name</label>
-                                <input type="text" id="firstname" name="firstname">
-                            </div>
-                            <div class="group-input">
-                                <label for="lastname">Last Name</label>
-                                <input type="text" id="lastname" name="lastname">
-                            </div>
+                    <div class="login-form">
+                        <h2>Login</h2>
+                        <form action="account/login" method="post">
                             <div class="group-input">
                                 <label for="username">Username or email address *</label>
                                 <input type="text" id="username" name="email">
@@ -43,18 +29,28 @@
                                 <label for="pass">Password *</label>
                                 <input type="password" id="pass" name="password">
                             </div>
-                            <button type="submit" class="site-btn register-btn">REGISTER</button>
+                            <div class="group-input gi-check">
+                                <div class="gi-more">
+                                    <label for="save-pass">
+                                        Save Password
+                                        <input type="checkbox" id="save-pass">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <a href="#" class="forget-pass">Forget your Password</a>
+                                </div>
+                            </div>
+                            <button type="submit" class="site-btn login-btn">Sign In</button>
                         </form>
                         <div class="switch-login">
-                            <a href="/login" class="or-login">Or Login</a>
+                            <a href="account/register" class="or-login">Or Create An Account</a>
                         </div>
                     </div>
-                </div>
+                </div>  
             </div>
         </div>
     </div>
     <!-- Register Form Section End -->
-    
+
     <!-- Partner Logo Section Begin -->
     <div class="partner-logo">
         <div class="container">
