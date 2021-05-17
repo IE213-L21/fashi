@@ -2,11 +2,11 @@
 class ProductController {
 
     createProduct(req, res) {
-        res.render('product/create-product')
+        res.render('admin/create-product')
     }
 
     editProduct(req, res) {
-        res.render('product/edit-product')
+        res.render('admin/edit-product')
     }
 
 }
