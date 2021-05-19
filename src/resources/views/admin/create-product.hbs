@@ -1,5 +1,5 @@
 <div class="container mt-4 mb-4">
-    <form method="post" action="product/create-product">
+    <form method="post" action="admin/create-product">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
@@ -7,6 +7,10 @@
         <div class="form-group">
             <label for="price">Price</label>
             <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+        </div>
+         <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" class="form-control" id="category" placeholder="Enter category" name="category">
         </div>
         <div class="form-group">
             <label for="description">Description</label>
@@ -17,8 +21,8 @@
             <input type="text" class="form-control" id="image" placeholder="Enter name" name="image">
         </div>
         <div class="form-group">
-            <label for="sex">Sex</label>
-            <input type="text" class="form-control" id="sex" placeholder="Enter male or female" name="sex">
+            <label for="gender">Gender</label>
+            <input type="text" class="form-control" id="gender" placeholder="Enter male or female" name="gender">
         </div>
         <button type="submit" class="btn btn-primary">Create Product</button>
     </form>
