@@ -9,8 +9,8 @@ router.post('/create-product', adminController.sendCreateProduct)
 
 router.get('/edit-product', adminController.editProduct)
 
-router.get('/index',adminController.adminHome)
-//router.get('/trash-product', productController.trashProduct)
-//router.get('/cart',productController.cartProduct)
+router.get('/products', adminController.adminHome)
+router.get('/trash-product', adminController.trashProduct)
+//router.get('/cart', adminController.cartProduct)
 
 module.exports = router ;

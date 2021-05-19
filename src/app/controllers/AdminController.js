@@ -23,13 +23,18 @@ class AdminController {
         const data = req.body
         const product = new Product(data)
         product.save()
-            .then(res.redirect('/admin/create-product'))
+            .then(res.redirect('/admin/products'))
             .catch(next)
     }
 
     // Render page edit product
     editProduct(req, res) {
         res.render('admin/edit-product')
+    }
+
+    // Render trash admin page
+    trashProduct(req, res, next){
+        res.render('admin/trash-product');
     }
 }
 

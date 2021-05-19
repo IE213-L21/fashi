@@ -6,7 +6,7 @@ const hbs  = require('express-handlebars')
 const path = require('path')
 const route = require('./routes')
 const db = require('./config/db');
-const app = express()
+const app = express();
 const port = 3000
 
 // Middleware
