@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const hbs  = require('express-handlebars')
 const path = require('path')
 const route = require('./routes')
+const db = require('./config/db');
 const app = express()
 const port = 3000
 
@@ -27,6 +28,10 @@ app.use(morgan('dev'))
 
 //Routes
 route(app)
+
+//Connect db
+db.connect();
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
