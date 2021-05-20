@@ -3,6 +3,7 @@ const  morgan = require('morgan')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const hbs  = require('express-handlebars')
+const Handlebars = require('./helpers/handlebars');
 const path = require('path')
 const route = require('./routes')
 const db = require('./config/db');
@@ -19,7 +20,12 @@ app.use(express.json()); // parse application/json
 app.use(express.static(path.join(__dirname, 'public'))) 
 
 // Template engine
-app.engine('.hbs', hbs({extname: '.hbs'}))
+app.engine(
+  '.hbs',
+  hbs({
+    extname: '.hbs',
+    helpers: require('./helpers/handlebars')
+  }))
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'resources', 'views')) //set views
 

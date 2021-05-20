@@ -9,7 +9,7 @@ class AdminController {
     adminHome(req, res, next) {
         Product.find({})
             .then((products) => {
-                res.render('admin/index', { products: multipleMongooseToObject(products) })
+                res.render('admin/index',{layout: 'admin',products: multipleMongooseToObject(products)})
             })
     }
 

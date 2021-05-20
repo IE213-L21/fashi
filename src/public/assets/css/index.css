@@ -1,0 +1,19 @@
+.form-control-admin-edit1 {
+    max-width: 300px;
+    margin: 0 16px;
+}
+
+.d-flex {
+    display: flex;
+    margin: 10px 4px;
+    align-items: center;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.trash-add a {
+    float: right;
+    margin: 0 4px;
+}
