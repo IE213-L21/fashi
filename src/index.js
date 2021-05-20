@@ -6,22 +6,22 @@ const hbs  = require('express-handlebars')
 const path = require('path')
 const route = require('./routes')
 const db = require('./config/db');
-const app = express()
+const app = express();
 const port = 3000
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// Middleware
+app.use(express.urlencoded({
+  extended: true
+})); // parse application/x-www-form-urlencoded
+app.use(express.json()); // parse application/json
 
-//static files
-app.use(express.static(path.join(__dirname, 'public')))
- 
-// parse application/json
-app.use(bodyParser.json())
+// Static files
+app.use(express.static(path.join(__dirname, 'public'))) 
 
-//template engine
+// Template engine
 app.engine('.hbs', hbs({extname: '.hbs'}))
 app.set('view engine', '.hbs')
-app.set('views',path.join(__dirname,'resources', 'views'))//set views
+app.set('views', path.join(__dirname, 'resources', 'views')) //set views
 
 //HTTP logger
 app.use(morgan('dev'))
@@ -34,5 +34,5 @@ db.connect();
 
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}`)
+  console.log(`App is listening at http://localhost:${port}`)
 })

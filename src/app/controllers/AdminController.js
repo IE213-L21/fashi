@@ -1,4 +1,4 @@
-const Product = require('../models/product_model');
+const Product = require('../models/product');
 const { mongooseToObject } = require('../../util/mongoose')
 const {multipleMongooseToObject} = require('../../util/mongoose')
 
@@ -21,15 +21,21 @@ class AdminController {
     // Save data from page create-product
     sendCreateProduct(req, res, next) {
         const data = req.body
+        data.image =req.file.filename
         const product = new Product(data)
         product.save()
-            .then(res.redirect('/admin/create-product'))
+            .then(() => res.redirect('/admin/products'))
             .catch(next)
     }
 
     // Render page edit product
     editProduct(req, res) {
         res.render('admin/edit-product')
+    }
+
+    // Render trash admin page
+    trashProduct(req, res, next){
+        res.render('admin/trash-product');
     }
 }
 
