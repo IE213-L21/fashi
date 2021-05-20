@@ -20,7 +20,7 @@ router.post('/create-product',uploads.single('image'), adminController.sendCreat
 
 router.get('/edit-product', adminController.editProduct)
 
-router.get('/products', adminController.adminHome)
+router.get('/', adminController.adminHome)
 router.get('/trash-product', adminController.trashProduct)
 //router.get('/cart', adminController.cartProduct)
 

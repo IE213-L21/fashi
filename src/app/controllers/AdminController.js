@@ -11,6 +11,7 @@ class AdminController {
             .then((products) => {
                 res.render('admin/index', { products: multipleMongooseToObject(products) })
             })
+            .catch(next)
     }
 
     // Render page create product
