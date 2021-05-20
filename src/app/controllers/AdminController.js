@@ -21,6 +21,7 @@ class AdminController {
     // Save data from page create-product
     sendCreateProduct(req, res, next) {
         const data = req.body
+        data.image =req.file.filename
         const product = new Product(data)
         product.save()
             .then(() => res.redirect('/admin/products'))

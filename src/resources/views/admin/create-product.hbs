@@ -17,7 +17,7 @@
     </div>
     <div class="col-md-10">
         <div class="container mt-4 mb-4">
-            <form method="post" action="admin/create-product">
+            <form method="post" action="admin/create-product" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
@@ -37,7 +37,8 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="text" class="form-control" id="image" placeholder="Enter name" name="image">
+                    {{!-- <input type="text" class="form-control" id="image" placeholder="Enter name" name="image"> --}}
+                    <input type="file" name="image" class="form-control" id="image" />
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>

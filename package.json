@@ -25,6 +25,7 @@
     "mongoose": "^5.12.9",
     "moongoose": "^0.0.5",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
     "node-sass": "^6.0.0"
   },
   "devDependencies": {
