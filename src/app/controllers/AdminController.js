@@ -23,7 +23,7 @@ class AdminController {
         const data = req.body
         const product = new Product(data)
         product.save()
-            .then(res.redirect('/admin/products'))
+            .then(() => res.redirect('/admin/products'))
             .catch(next)
     }
 
