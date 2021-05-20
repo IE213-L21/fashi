@@ -2,13 +2,13 @@ const siteRouter = require('./site');
 const blogRouter = require('./blog');
 const accountRouter = require('./account');
 const shopRouter = require('./shop');
-const admintRouter = require('./admin');
+const adminRouter = require('./admin');
 
 function route(app) {
     app.use('/blogs', blogRouter);
     app.use('/account', accountRouter);
     app.use('/shops', shopRouter);
-    app.use('/admin', admintRouter);
+    app.use('/admin', adminRouter);
     app.use('/', siteRouter);
 }
 
