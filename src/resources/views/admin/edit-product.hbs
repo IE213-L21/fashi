@@ -1,29 +1,49 @@
-<div class="container mt-4 mb-4">
-    <form method="post" action="/product/update/{{products._id}}?_method=PUT">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{products.name}}">
+<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="container mt-4 mb-4">
+            <form method="post" action="/admin/update/{{products._id}}?_method=PUT" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" value="{{products.name}}" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price"  placeholder="Enter price" value="{{products.price}}" name="price">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category" placeholder="Enter category"  value="{{products.category}}" name="category">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="Enter description" value="{{products.description}}"
+                        name="description">
+                </div>
+                <div class="form-group">
+                    <label style="display: block;" for="image">Image</label>
+                    <img src="/img/create-img/{{products.image}}" alt="" style="width: 240px;">
+                    <input style="padding-left: 0px;" type="file" name="image" class="form-control" id="image"/>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input type="text" class="form-control" id="gender" placeholder="Enter men or women or kid" value="{{products.gender}}"
+                        name="gender">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Size</label>
+                    <input type="text" class="form-control" id="size" placeholder="Enter size" value="{{products.size}}" name="size">
+                </div>
+                <button type="submit" class="btn btn-primary">Update product</button>
+            </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" class="form-control" id="price" name="price" value="{{products.price}}">
-        </div>
-        <div class="form-group">
-            <label for="category">Category</label>
-            <input type="text" class="form-control" id="category" name="category" value="{{products.category}}">
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" id="description" name="description" value="{{products.description}}">
-        </div>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <input type="text" class="form-control" id="image" name="image" value="{{products.image}}">
-        </div>
-        <div class="form-group">
-            <label for="gender">Gender</label>
-            <input type="text" class="form-control" id="gender" name="gender" value="{{products.gender}}">
-        </div>
-        <button type="submit" class="btn btn-primary">Update Product</button>
-    </form>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+	<div class="clearfix"></div>
 </div>

@@ -18,7 +18,8 @@ const uploads = multer({storage:storage})
 router.get('/create-product', adminController.createProduct)
 router.post('/create-product',uploads.single('image'), adminController.sendCreateProduct)
 
-router.get('/edit-product', adminController.editProduct)
+router.get('/:id/edit-product', uploads.single('image'), adminController.editProduct)
+router.put('/update/:id', uploads.single('image'), adminController.updateProduct)
 
 router.get('/', adminController.adminHome)
 router.get('/trash-product', adminController.trashProduct)

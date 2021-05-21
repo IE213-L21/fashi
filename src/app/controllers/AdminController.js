@@ -29,9 +29,27 @@ class AdminController {
             .catch(next)
     }
 
+    
     // Render page edit product
-    editProduct(req, res) {
-        res.render('admin/edit-product')
+    editProduct(req, res, next) {
+        Product.findById({_id:req.params.id})
+            .then(products => res.render('admin/edit-product', {
+                layout: 'admin',
+                products: mongooseToObject(products)
+            })) 
+            .catch(next)
+    }
+
+    //Update Product from form edit product
+     updateProduct(req, res) {
+        const data = req.body
+        if (req.file) {
+            data.image = req.file.filename
+        }  
+        Product.updateOne({ _id: req.params.id}, data)
+            .then(() => {
+                res.redirect('/admin')
+            })
     }
 
     // Render trash admin page

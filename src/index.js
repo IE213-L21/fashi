@@ -3,8 +3,9 @@ const  morgan = require('morgan')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const hbs  = require('express-handlebars')
-const Handlebars = require('./helpers/handlebars');
+const methodOverride = require('method-override');
 const path = require('path')
+const Handlebars = require('./helpers/handlebars');
 const route = require('./routes')
 const db = require('./config/db');
 const app = express();
@@ -18,6 +19,10 @@ app.use(express.json()); // parse application/json
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 
+
+//use override method
+app.use(methodOverride('_method'));
+
 
 // Template engine
 app.engine(
@@ -37,6 +42,7 @@ route(app)
 
 //Connect db
 db.connect();
+
 
 
 app.listen(port, () => {
