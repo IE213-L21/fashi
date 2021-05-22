@@ -10,7 +10,7 @@ class AdminController {
     // Trang admin
     adminHome(req, res, next) {
 
-        Promise.all([Product.find({}), Product.countDocumentsDeleted()])
+        Promise.all([Product.find({}).sortable(req), Product.countDocumentsDeleted()])
             .then(([products,deletedCount]) =>   
                  res.render('admin/index',{layout: 'admin',products: multipleMongooseToObject(products),deletedCount }),
             )

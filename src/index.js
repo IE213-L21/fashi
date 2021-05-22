@@ -8,6 +8,7 @@ const path = require('path')
 const Handlebars = require('./helpers/handlebars');
 const route = require('./routes')
 const db = require('./config/db');
+const sortMiddleware = require('./app/middlewares/sortMiddleware')
 const app = express();
 const port = 3000
 
@@ -23,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 //use override method
 app.use(methodOverride('_method'));
 
+// Use sortMiddleware
+app.use(sortMiddleware);  
 
 // Template engine
 app.engine(

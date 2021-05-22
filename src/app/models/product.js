@@ -14,6 +14,21 @@ const Product = new Schema({
 }, {
     timestamps: true,
 });
+
+  //Custom query helpers
+
+  Product.query.sortable = function(req) {
+    if(req.query.hasOwnProperty('_sort')) {
+
+      const isValidtype = ['asc', 'desc'].includes(req.query.type);
+
+          return this.sort({
+          [req.query.column]: isValidtype ? req.query.type: 'desc',
+      });
+   }
+    return this;
+  }
+
 Product.plugin(mongoose_delete,{ deletedAt : true ,overrideMethods: 'all'})
 
 module.exports = mongoose.model('Product', Product);

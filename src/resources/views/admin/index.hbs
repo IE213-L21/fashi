@@ -32,9 +32,9 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Stt</th>
-                                    <th scope="col">Name
+                                    <th scope="col">Name {{{sortable 'name' _sort}}}
                                     </th>
-                                    <th scope="col">Price 
+                                    <th scope="col">Price {{{sortable 'price' _sort}}}
                                     </th>
                                     <th>Category</th>
                                     <th scope="col">Description</th>
@@ -53,7 +53,7 @@
                                     </td>
                                     <td scope="row">{{sum @index 1}}</td>
                                     <td>{{this.name}}</td>
-                                    <td>{{this.price}}</td>
+                                    <td>{{this.price}} </td>
                                     <td>{{this.category}}</td>
                                     <td>{{this.description}}</td>
                                     <td><img src="/img/create-img/{{this.image}}" alt="" style="width: 240px;"></td>
@@ -100,7 +100,7 @@
             </div>
 
             <form name="form-delete-product" method="POST" ></form>
-            <form name="form-sort-product" method="GET" action=""></form>
+            {{!--<form name="form-sort-product" method="GET" action=""></form>--}}
             <script>
                 document.addEventListener("DOMContentLoaded",function(){
                     var productId
