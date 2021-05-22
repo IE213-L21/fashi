@@ -5,18 +5,21 @@ const {multipleMongooseToObject} = require('../../util/mongoose')
 
 class AdminController {
 
+
+  
     // Trang admin
     adminHome(req, res, next) {
-        Product.find({})
-            .then((products) => {
-                res.render('admin/index',{layout: 'admin',products: multipleMongooseToObject(products)})
-            })
+
+        Promise.all([Product.find({}), Product.countDocumentsDeleted()])
+            .then(([products,deletedCount]) =>   
+                 res.render('admin/index',{layout: 'admin',products: multipleMongooseToObject(products),deletedCount }),
+            )
             .catch(next)
     }
 
     // Render page create product
     createProduct(req, res) {
-        res.render('admin/create-product')
+        res.render('admin/create-product', {layout: 'admin'})
     }
 
     // Save data from page create-product
@@ -25,7 +28,7 @@ class AdminController {
         data.image =req.file.filename
         const product = new Product(data)
         product.save()
-            .then(() => res.redirect('/admin/products'))
+            .then(() => res.redirect('/admin'))
             .catch(next)
     }
 
@@ -41,7 +44,7 @@ class AdminController {
     }
 
     //Update Product from form edit product
-     updateProduct(req, res) {
+     updateProduct(req, res,next) {
         const data = req.body
         if (req.file) {
             data.image = req.file.filename
@@ -50,11 +53,34 @@ class AdminController {
             .then(() => {
                 res.redirect('/admin')
             })
+            .catch(next)
+    }
+
+    // Delete soft product
+    deleteSoftProduct(req,res,next) {
+        Product.delete({ _id: req.params.id})
+        .then(() => res.redirect('back'))
+        .catch(next);
+    }
+
+
+    //[POST] /admin/handle-form-actions
+    handleFormActions(req, res, next) {
+        switch(req.body.action) {
+            case 'delete':
+                Product.delete({ _id: { $in: req.body.productIds} } )
+                .then(() => res.redirect('back'))
+                .catch(next);
+                
+                break;
+            default: 
+                res.json({message: 'Action invalid!'});
+        }
     }
 
     // Render trash admin page
     trashProduct(req, res, next){
-        res.render('admin/trash-product');
+        res.render('admin/trash-product',{layout: 'admin'});
     }
 }
 

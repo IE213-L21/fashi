@@ -23,6 +23,11 @@ router.put('/update/:id', uploads.single('image'), adminController.updateProduct
 
 router.get('/', adminController.adminHome)
 router.get('/trash-product', adminController.trashProduct)
+
+router.delete('/:id',adminController.deleteSoftProduct)
+
+router.post('/handle-form-actions', adminController.handleFormActions);
+
 //router.get('/cart', adminController.cartProduct)
 
 module.exports = router ;

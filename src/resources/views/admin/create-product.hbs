@@ -1,4 +1,4 @@
-<div class="row">
+{{!--<div class="row">
     <div class="col-md-2 mt-4 mb-4">
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -16,41 +16,60 @@
         </ul>
     </div>
     <div class="col-md-10">
-        <div class="container mt-4 mb-4">
-            <form method="post" action="admin/create-product" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
-                </div>
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
-                </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" class="form-control" id="category" placeholder="Enter category" name="category">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" placeholder="Enter description"
-                        name="description">
-                </div>
-                <div class="form-group">
-                    <label for="image">Image</label>
-                    {{!-- <input type="text" class="form-control" id="image" placeholder="Enter name" name="image"> --}}
-                    <input type="file" name="image" class="form-control" id="image" />
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <input type="text" class="form-control" id="gender" placeholder="Enter men or women or kid"
-                        name="gender">
-                </div>
-                <div class="form-group">
-                    <label for="gender">Size</label>
-                    <input type="text" class="form-control" id="gender" placeholder="Enter size" name="size">
-                </div>
-                <button type="submit" class="btn btn-primary">Create Product</button>
-            </form>
-        </div>
+      
     </div>
+</div>--}}
+
+
+
+  
+
+<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="container mt-4 mb-4">
+                    <form method="post" action="admin/create-product" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" class="form-control" id="category" placeholder="Enter category" name="category">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter description"
+                                name="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            {{!-- <input type="text" class="form-control" id="image" placeholder="Enter name" name="image"> --}}
+                            <input type="file" name="image" class="form-control" id="image" />
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <input type="text" class="form-control" id="gender" placeholder="Enter men or women or kid"
+                                name="gender">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Size</label>
+                            <input type="text" class="form-control" id="gender" placeholder="Enter size" name="size">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Product</button>
+                    </form>
+                </div>             
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+	<div class="clearfix"></div>
 </div>
