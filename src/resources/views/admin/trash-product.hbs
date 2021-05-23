@@ -39,6 +39,7 @@
                                 <th scope="col">Image</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Size</th>
+                                <th scope="col">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,9 +48,11 @@
                                 <th scope="row">{{sum @index 1}}</th>
                                 <td>{{this.name}}</td>
                                 <td>{{this.price}}</td>
+                                <td>{{this.category}}</td>
                                 <td>{{this.description}}</td>
-                                <td><img src="{{this.image}}" alt=""></td>
-                                <td>{{this.sex}}</td>
+                                <td><img src="/img/create-img/{{this.image}}" alt="" style="width: 240px;"></td>
+                                <td>{{this.gender}}</td>
+                                <td>{{this.size}}</td>
                                 <td>
                                     <a type="button" href="" class="btn btn-outline-primary btn-restore" data-id="{{this._id}}">Khôi
                                         Phục</a>
@@ -57,12 +60,12 @@
                                         data-target="#delete-product-modal" data-id="{{this._id}}">Xoá Vĩnh Viễn</a>
                                 </td>
                             </tr>
-                            {{!-- {{else}}
+                            {{else}}
                             <tr>
                                 <td colspan="7" class="trash-product">
-                                    Danh sách rỗng <a href="/admin/products">Danh sách sản phẩm của bạn</a>
+                                    Danh sách rỗng <a href="/admin">Danh sách sản phẩm của bạn</a>
                                 </td>
-                            </tr> --}}
+                            </tr>
                             {{/each}}
                         </tbody>
                     </table>
@@ -107,7 +110,7 @@
 
                         //when delete course btn clicked
                         btnDelete.onclick = function () {
-                            deleteForm.action = '/product/' + courseId + '/force?_method=DELETE';
+                            deleteForm.action = `admin/trash-product/${courseId}/force?_method=DELETE`;
                             deleteForm.submit();
                         }
 
@@ -115,7 +118,7 @@
                         btnRestore.click(function (e) {
                             e.preventDefault();
                             var productId = $(this).data('id');
-                            restoreForm.action = '/product/' + productId + '/restore?_method=PATCH';
+                            restoreForm.action = `admin/trash-product/${productId}/restore?_method=PATCH`;
                             restoreForm.submit()
                         })
 

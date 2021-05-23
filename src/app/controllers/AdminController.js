@@ -63,6 +63,26 @@ class AdminController {
         .catch(next);
     }
 
+    //Trash product
+    trashProduct(req,res,next) {
+        Product.findDeleted({})
+            .then(products => res.render('admin/trash-product',{layout: 'admin',products:multipleMongooseToObject(products)}))
+            .catch(next);
+    }
+
+    //restorer
+    restoreProduct(req,res,next) {
+        Product.restore({ _id: req.params.id})
+            .then(()=>res.redirect('back'))
+            .catch(next)
+    }
+
+    //Delete forever
+    deleteForever(req, res, next){
+        Product.deleteOne({ _id: req.params.id})
+            .then(() => res.redirect('back'))
+            .catch(next)
+    }
 
     //[POST] /admin/handle-form-actions
     handleFormActions(req, res, next) {
@@ -78,10 +98,6 @@ class AdminController {
         }
     }
 
-    // Render trash admin page
-    trashProduct(req, res, next){
-        res.render('admin/trash-product',{layout: 'admin'});
-    }
 }
 
 module.exports = new AdminController;

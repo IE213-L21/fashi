@@ -23,6 +23,8 @@ router.put('/update/:id', uploads.single('image'), adminController.updateProduct
 
 router.get('/', adminController.adminHome)
 router.get('/trash-product', adminController.trashProduct)
+router.delete('/trash-product/:id/force',adminController.deleteForever)
+router.patch('/trash-product/:id/restore',adminController.restoreProduct)
 
 router.delete('/:id',adminController.deleteSoftProduct)
 

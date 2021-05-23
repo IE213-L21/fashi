@@ -17,7 +17,6 @@ module.exports = {
             desc: 'asc',
         }
         
-
         const icon = icons[sortType];
         const type = types[sortType];
         const href = Handlebars.escapeExpression(`./admin?_sort&column=${field}&type=${type}`);
