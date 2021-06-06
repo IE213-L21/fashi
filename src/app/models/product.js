@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
-mongoose_delete = require('mongoose-delete');
+const mongoose_delete = require('mongoose-delete');
+const slug = require('mongoose-slug-generator');
+
 const Schema = mongoose.Schema;
+
+
 
 const Product = new Schema({
     id: mongoose.ObjectId,
@@ -11,6 +15,8 @@ const Product = new Schema({
     image: { type: String, maxLength: 255 },
     gender: { type: String, maxLength: 255 },
     size: { type: String, maxLength: 3 },
+    quantity: { type: Number },
+    slug: { type: String, slug: "name" }
 }, {
     timestamps: true,
 });
@@ -29,5 +35,6 @@ const Product = new Schema({
   }
 
 Product.plugin(mongoose_delete, { deletedAt : true ,overrideMethods: 'all'} )
+mongoose.plugin(slug);
 
 module.exports = mongoose.model('Product', Product);

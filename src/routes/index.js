@@ -9,7 +9,7 @@ const adminRouter = require('./admin');
 function route(app) {
     app.use('/blogs', blogRouter);
     app.use('/account', accountRouter);
-    app.use('/shops', shopRouter);
+    app.use('/product', shopRouter);
     app.use('/admin', adminRouter);
     app.use('/', siteRouter);
 }

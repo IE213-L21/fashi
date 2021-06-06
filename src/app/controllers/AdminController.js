@@ -22,7 +22,7 @@ class AdminController {
     // Save data from page create-product
     sendCreateProduct(req, res, next) {
         const data = req.body
-        data.image = req.file.filename
+        data.image = req.file.destination.split('/').slice(3).join('/').concat('/').concat(req.file.originalname)
         console.log(data)
         console.log(req.file)
         const product = new Product(data)

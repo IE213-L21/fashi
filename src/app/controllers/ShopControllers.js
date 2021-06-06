@@ -27,6 +27,9 @@ class ShopController {
         res.render('shops/shopping-cart');
     }
      
+    productDetails(req, res, next) {
+        res.send('Arsenal');
+    }
 }
 
 module.exports = new ShopController();
