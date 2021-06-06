@@ -21,7 +21,6 @@ const Product = new Schema({
     if(req.query.hasOwnProperty('_sort')) {
 
       const isValidtype = ['asc', 'desc'].includes(req.query.type);
-
           return this.sort({
           [req.query.column]: isValidtype ? req.query.type: 'desc',
       });
@@ -29,6 +28,6 @@ const Product = new Schema({
     return this;
   }
 
-Product.plugin(mongoose_delete,{ deletedAt : true ,overrideMethods: 'all'})
+Product.plugin(mongoose_delete, { deletedAt : true ,overrideMethods: 'all'} )
 
 module.exports = mongoose.model('Product', Product);

@@ -9,11 +9,11 @@ const storage = multer.diskStorage({
         cb(null,'./src/public/img/create-img')
     },
     filename:function(req,file,cb){
-        cb(null,file.originalname)
+        cb(null, file.originalname)
     }
 })
 
-const uploads = multer({storage:storage})
+const uploads = multer( { storage:storage } );
 
 router.get('/create-product', adminController.createProduct)
 router.post('/create-product',uploads.single('image'), adminController.sendCreateProduct)

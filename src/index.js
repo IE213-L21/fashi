@@ -34,20 +34,18 @@ app.engine(
     extname: '.hbs',
     helpers: require('./helpers/handlebars')
   }))
-app.set('view engine', '.hbs')
-app.set('views', path.join(__dirname, 'resources', 'views')) //set views
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, 'resources', 'views')); //set views
 
 //HTTP logger
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
 //Routes
-route(app)
+route(app);
 
 //Connect db
 db.connect();
 
-
-
 app.listen(port, () => {
-  console.log(`App is listening at http://localhost:${port}`)
+  console.log(`App is listening at http://localhost:${port}`);
 })

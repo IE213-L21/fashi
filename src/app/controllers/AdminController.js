@@ -5,11 +5,8 @@ const {multipleMongooseToObject} = require('../../util/mongoose')
 
 class AdminController {
 
-
-  
     // Trang admin
     adminHome(req, res, next) {
-
         Promise.all([Product.find({}).sortable(req), Product.countDocumentsDeleted()])
             .then(([products,deletedCount]) =>   
                  res.render('admin/index',{layout: 'admin',products: multipleMongooseToObject(products),deletedCount }),
@@ -19,13 +16,15 @@ class AdminController {
 
     // Render page create product
     createProduct(req, res) {
-        res.render('admin/create-product', {layout: 'admin'})
+        res.render('admin/create-product', { layout: 'admin' } )
     }
 
     // Save data from page create-product
     sendCreateProduct(req, res, next) {
         const data = req.body
-        data.image =req.file.filename
+        data.image = req.file.filename
+        console.log(data)
+        console.log(req.file)
         const product = new Product(data)
         product.save()
             .then(() => res.redirect('/admin'))
@@ -44,7 +43,7 @@ class AdminController {
     }
 
     //Update Product from form edit product
-     updateProduct(req, res,next) {
+    updateProduct(req, res,next) {
         const data = req.body
         if (req.file) {
             data.image = req.file.filename
@@ -66,7 +65,7 @@ class AdminController {
     //Trash product
     trashProduct(req,res,next) {
         Product.findDeleted({})
-            .then(products => res.render('admin/trash-product',{layout: 'admin',products:multipleMongooseToObject(products)}))
+            .then(products => res.render('admin/trash-product', { layout: 'admin',products: multipleMongooseToObject(products)} ))
             .catch(next);
     }
 
@@ -91,7 +90,6 @@ class AdminController {
                 Product.delete({ _id: { $in: req.body.productIds} } )
                 .then(() => res.redirect('back'))
                 .catch(next);
-                
                 break;
             default: 
                 res.json({message: 'Action invalid!'});
