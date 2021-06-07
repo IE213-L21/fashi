@@ -145,7 +145,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                                <img class="product-big-img" src="{{product.image}}" alt="{{product.name}}">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -166,8 +166,8 @@
                         <div class="col-lg-6">
                             <div class="product-details">
                                 <div class="pd-title">
-                                    <span>oranges</span>
-                                    <h3>Pure Pineapple</h3>
+                                    <span>{{product.category}}</span>
+                                    <h3>{{product.name}}</h3>
                                     <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <div class="pd-rating">
@@ -179,9 +179,8 @@
                                     <span>(5)</span>
                                 </div>
                                 <div class="pd-desc">
-                                    <p>Lorem ipsum dolor sit amet, consectetur ing elit, sed do eiusmod tempor sum dolor
-                                        sit amet, consectetur adipisicing elit, sed do mod tempor</p>
-                                    <h4>$495.00 <span>629.99</span></h4>
+                                    <p>{{product.description}}</p>
+                                    <h4>{{product.price}}.000đ</h4>
                                 </div>
                                 <div class="pd-color">
                                     <h6>Color</h6>
@@ -438,7 +437,7 @@
                         <div class="pi-text">
                             <div class="catagory-name">Coat</div>
                             <a href="#">
-                                <h5>Pure Pineapple</h5>
+                                <h5>{{this.name}}</h5>
                             </a>
                             <div class="product-price">
                                 $14.00
@@ -487,7 +486,7 @@
                         <div class="pi-text">
                             <div class="catagory-name">Towel</div>
                             <a href="#">
-                                <h5>Pure Pineapple</h5>
+                                <h5>A</h5>
                             </a>
                             <div class="product-price">
                                 $34.00
