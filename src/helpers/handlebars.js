@@ -2,6 +2,7 @@ const Handlebars = require('handlebars');
 
 module.exports = {
     sum: (a,b) => a+b,
+
     sortable: (field, sort) => {
         const sortType = field === sort.column ? sort.type : 'default';
         const icons = {
@@ -25,5 +26,5 @@ module.exports = {
         <span class="${icon}"></span>
       </a>`;
       return new Handlebars.SafeString(output);
-    }
+    },
 }

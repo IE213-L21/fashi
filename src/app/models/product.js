@@ -12,8 +12,8 @@ const ProductSchema = new Schema({
     description: { type: String, maxLength: 600, required: true },
     gender: { type: String, maxLength: 255 },
     image: { type: String, maxLength: 255 },
-    size: { type: String, required: true },
-    color: { type: String, required: true },
+    size: { type: String,  },
+    color: { type: String,  },
     quantity: { type: Number, required: true },
     slug: { type: String, slug: "name" },
 }, {

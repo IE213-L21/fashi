@@ -5,38 +5,63 @@
         <div class="main-content">
             <div class="container-fluid">
                 <div class="container mt-4 mb-4">
-            <form method="post" action="/admin/update/{{products._id}}?_method=PUT" enctype="multipart/form-data">
+            <form method="post" action="/admin/update/{{product._id}}?_method=PUT" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" value="{{products.name}}" name="name">
-                </div>
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="text" class="form-control" id="price"  placeholder="Enter price" value="{{products.price}}" name="price">
-                </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" class="form-control" id="category" placeholder="Enter category"  value="{{products.category}}" name="category">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" placeholder="Enter description" value="{{products.description}}"
-                        name="description">
-                </div>
-                <div class="form-group">
-                    <label style="display: block;" for="image">Image</label>
-                    <img src="/img/create-img/{{products.image}}" alt="" style="width: 240px;">
-                    <input style="padding-left: 0px;" type="file" name="image" class="form-control" id="image"/>
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <input type="text" class="form-control" id="gender" placeholder="Enter men or women or kid" value="{{products.gender}}"
-                        name="gender">
-                </div>
-                <div class="form-group">
-                    <label for="gender">Size</label>
-                    <input type="text" class="form-control" id="size" placeholder="Enter size" value="{{products.size}}" name="size">
-                </div>
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="{{product.name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price" value="{{product.price}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Select category of products</label>
+                            <select class="form-control" name="category" id="category">
+                                <option value="Sport">Sport</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Formal">Formal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter description"
+                                name="description" value="{{product.description}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Select gender of products</label>
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Kids">Kids</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" name="image" class="form-control" id="image" />
+                        </div>
+                        <div class="form-group">
+                            <label for="size">Select size of products</label>
+                            <select class="form-control" name="size" id="size">
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Select color of products</label>
+                            <select class="form-control" name="color" id="color">
+                                <option value="Red">Red</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Blue">Blue</option>
+                                <option value="White">White</option>
+                                <option value="Black">Black</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Quantity</label>
+                            <input type="text" class="form-control" id="quantity"
+                                placeholder="Enter the number of products" name="quantity" value="{{product.quantity}}">
+                        </div>
                 <button type="submit" class="btn btn-primary">Update product</button>
             </form>
                 </div>
