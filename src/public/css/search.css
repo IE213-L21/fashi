@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  #livesearch {
+    background-color: gainsboro;
+    border-color: black;
+    border-width: thin;
+    border-style: solid;
+    width: 420px;
+    height: 300px;
+    z-index: 999;
+    position: relative;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  a:link,
+  :visited,
+  :hover,
+  :active {
+    color: black;
+  }

@@ -53,8 +53,11 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <form method="get" action="/product/search">
+                                    <input type="text" placeholder="What do you need?" name="name" autocomplete="off" onkeyup="showResult(this.value)" style="color:black;height:48px">
+                                    <div id="livesearch" class="hide"></div>
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>
