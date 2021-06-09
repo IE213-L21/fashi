@@ -4,26 +4,25 @@ const slug = require('mongoose-slug-generator');
 
 const Schema = mongoose.Schema;
 
-
-
-const Product = new Schema({
+const ProductSchema = new Schema({
     id: mongoose.ObjectId,
-    name: { type: String, maxLength: 255 },
-    price: { type: String, maxLength: 255 },
+    name: { type: String, maxLength: 255, required: true },
+    price: { type: String, maxLength: 255, required: true },
     category: { type: String, maxLength: 255 },
-    description: { type: String, maxLength: 600 },
-    image: { type: String, maxLength: 255 },
+    description: { type: String, maxLength: 600, required: true },
     gender: { type: String, maxLength: 255 },
-    size: { type: String, maxLength: 3 },
-    quantity: { type: Number },
-    slug: { type: String, slug: "name" }
+    image: { type: String, maxLength: 255 },
+    size: { type: String, required: true },
+    color: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    slug: { type: String, slug: "name" },
 }, {
     timestamps: true,
 });
 
   //Custom query helpers
 
-  Product.query.sortable = function(req) {
+  ProductSchema.query.sortable = function(req) {
     if(req.query.hasOwnProperty('_sort')) {
 
       const isValidtype = ['asc', 'desc'].includes(req.query.type);
@@ -34,7 +33,7 @@ const Product = new Schema({
     return this;
   }
 
-Product.plugin(mongoose_delete, { deletedAt : true ,overrideMethods: 'all'} )
+ProductSchema.plugin(mongoose_delete, { deletedAt : true ,overrideMethods: 'all'} )
 mongoose.plugin(slug);
 
-module.exports = mongoose.model('Product', Product);
+module.exports = mongoose.model('Product', ProductSchema);

@@ -1,4 +1,4 @@
-### E-Shop
+### Fashi
 
 ### Cài đặt local: 
 1. Install dependancies:

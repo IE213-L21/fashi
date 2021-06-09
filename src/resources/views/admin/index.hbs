@@ -53,7 +53,7 @@
                                         </div>
                                     </td>
                                     <td scope="row">{{sum @index 1}}</td>
-                                    <td>{{this.name}}</td>
+                                    <td><a href="/product/{{this.slug}}">{{this.name}}</a></td>
                                     <td>{{this.price}} </td>
                                     <td>{{this.category}}</td>
                                     <td>{{this.description}}</td>
@@ -61,6 +61,7 @@
                                     <td>{{this.gender}}</td>
                                     <td>{{this.quantity}}</td> 
                                     <td>
+                                        <a type="button" href="/admin/{{this._id}}/edit-product-options" class="btn btn-link btn-outline-primary" style="min-width: 83px;">Edit quantity</a>
                                         <a type="button" href="/admin/{{this._id}}/edit-product" class="btn btn-link btn-outline-primary" style="min-width: 83px;">Edit</a>
                                         <a type="button" id="btn-delete" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{this._id}}" style="min-width: 83px;">Delete</a>
                                     </td>

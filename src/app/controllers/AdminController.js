@@ -2,7 +2,6 @@ const Product = require('../models/product');
 const { mongooseToObject } = require('../../util/mongoose')
 const {multipleMongooseToObject} = require('../../util/mongoose')
 
-
 class AdminController {
 
     // Trang admin
@@ -21,12 +20,11 @@ class AdminController {
 
     // Save data from page create-product
     sendCreateProduct(req, res, next) {
-        const data = req.body
-        data.image = req.file.destination.split('/').slice(3).join('/').concat('/').concat(req.file.originalname)
-        const product = new Product(data)
+        const data = req.body;
+        const product = new Product(data);
         product.save()
-            .then(() => res.redirect('/admin'))
-            .catch(next)
+            .then((product) => res.json(product))
+            .catch(next);
     }
 
     
@@ -93,7 +91,6 @@ class AdminController {
                 res.json({message: 'Action invalid!'});
         }
     }
-
 }
 
 module.exports = new AdminController;

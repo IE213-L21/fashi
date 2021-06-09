@@ -5,7 +5,7 @@
         <div class="main-content">
             <div class="container-fluid">
                 <div class="container mt-4 mb-4">
-                    <form method="post" action="admin/create-product" enctype="multipart/form-data">
+                    <form method="post" action="admin/create-product" {{!-- enctype="multipart/form-data" --}}>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
@@ -25,7 +25,6 @@
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
-                            {{!-- <input type="text" class="form-control" id="image" placeholder="Enter name" name="image"> --}}
                             <input type="file" name="image" class="form-control" id="image" />
                         </div>
                         <div class="form-group">
@@ -33,15 +32,11 @@
                             <input type="text" class="form-control" id="gender" placeholder="Enter men or women or kid"
                                 name="gender">
                         </div>
-                        <div class="form-group">
-                            <label for="gender">Size</label>
-                            <input type="text" class="form-control" id="gender" placeholder="Enter size" name="size">
-                        </div>
-                        <div class="form-group">
+                        {{!-- <div class="form-group">
                             <label for="gender">Quantity</label>
                             <input type="text" class="form-control" id="quantity" placeholder="Enter the number of products"
                                 name="quantity">
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-primary">Create Product</button>
                     </form>
                 </div>             
