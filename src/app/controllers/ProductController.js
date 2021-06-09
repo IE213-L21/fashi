@@ -22,6 +22,48 @@ class ProductController {
         })
         .catch(next);
     }
+
+    search(req, res,next) {
+        Product.find({name:req.query.name})
+        .then( (products) => {
+            res.render('product/search', { products: multipleMongooseToObject(products) });
+        })
+        .catch(next);
+    }
+
+    searchRealTime(req, res, next){
+        //Declare variables
+        let hint = "";
+        let response = "";
+        let searchQ = req.body.search.toLowerCase(); 
+        let filterNum = 1;
+
+        if(searchQ.length > 0){
+            Product.find(function(err, results){
+            if(err){
+                console.log(err);
+            }else{
+                results.forEach(function(sResult){
+                    if(sResult.name.toLowerCase().indexOf(searchQ) !== -1){
+                        if(hint === ""){
+                            hint="<a href='/product/" + sResult.slug + "' target='_self'>" + sResult.name + "</a>";
+                        }else if(filterNum < 20){
+                            hint = hint + "<br /><a href='/product/" + sResult.slug + "' target='_self'>" + sResult.name + "</a>";
+                            filterNum++;
+                        }
+                    }
+                })
+            }
+            if(hint === ""){
+                response = "no suggestion"
+            }else{
+                response = hint;
+            }
+        
+            res.send({response: response});
+        });
+        }
+    }
     
     // [GET] /
     shoppingCart(req, res) {

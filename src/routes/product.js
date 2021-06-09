@@ -7,6 +7,8 @@ router.get('/check-out', productController.checkOut);
 router.get('/product', productController.product);
 router.get('/shop', productController.shop);
 router.get('/shopping-cart', productController.shoppingCart);
+router.post('/search', productController.searchRealTime)
+router.get('/search', productController.search);
 router.get('/:slug', productController.productDetails);
 
 
