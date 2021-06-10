@@ -32,7 +32,6 @@ class AdminController {
             .catch(next);
     }
 
-
     // Render page edit product
     editProduct(req, res, next) {
         Product.findById({ _id: req.params.id })

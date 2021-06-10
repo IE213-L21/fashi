@@ -5,8 +5,9 @@
         <div class="main-content">
             <div class="container-fluid">
                 <div class="container mt-4 mb-4">
-            <form method="post" action="/admin/update/{{product._id}}?_method=PUT" enctype="multipart/form-data">
-                <div class="form-group">
+                    <form method="post" action="/admin/update/{{product._id}}?_method=PUT"
+                        enctype="multipart/form-data">
+                        <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="{{product.name}}">
                         </div>
@@ -15,12 +16,18 @@
                             <input type="text" class="form-control" id="price" placeholder="Enter price" name="price" value="{{product.price}}">
                         </div>
                         <div class="form-group">
-                            <label for="category">Select category of products</label>
-                            <select class="form-control" name="category" id="category">
-                                <option value="Sport">Sport</option>
-                                <option value="Casual">Casual</option>
-                                <option value="Formal">Formal</option>
+                            <label for="league">Select league</label>
+                            <select class="form-control" name="league" id="league">
+                                <option value="Premier League">Premier League</option>
+                                <option value="Bundesliga">Bundesliga</option>
+                                <option value="La Liga">La Liga</option>
+                                <option value="Ligue 1">Ligue 1</option>
+                                <option value="Seria A">Seria A</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="club">Club</label>
+                            <input type="text" class="form-control" id="club" placeholder="Enter club" name="club" value="{{product.club}}">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -28,47 +35,31 @@
                                 name="description" value="{{product.description}}">
                         </div>
                         <div class="form-group">
-                            <label for="gender">Select gender of products</label>
-                            <select class="form-control" name="gender" id="gender">
-                                <option value="Men">Men</option>
-                                <option value="Women">Women</option>
-                                <option value="Kids">Kids</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" name="image" class="form-control" id="image" />
                         </div>
                         <div class="form-group">
-                            <label for="size">Select size of products</label>
-                            <select class="form-control" name="size" id="size">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                            </select>
+                            <label for="quantityOfSizeS">Quantity of size S</label>
+                            <input type="text" class="form-control" id="quantityOfSizeS"
+                                placeholder="Enter the quantity of size S" name="quantityOfSizeS" value="{{product.quantityOfSizeS}}">
                         </div>
                         <div class="form-group">
-                            <label for="color">Select color of products</label>
-                            <select class="form-control" name="color" id="color">
-                                <option value="Red">Red</option>
-                                <option value="Yellow">Yellow</option>
-                                <option value="Blue">Blue</option>
-                                <option value="White">White</option>
-                                <option value="Black">Black</option>
-                            </select>
+                            <label for="quantityOfSizeM">Quantity of size M</label>
+                            <input type="text" class="form-control" id="quantityOfSizeM"
+                                placeholder="Enter the quantity of size M" name="quantityOfSizeM" value="{{product.quantityOfSizeM}}">
                         </div>
                         <div class="form-group">
-                            <label for="gender">Quantity</label>
-                            <input type="text" class="form-control" id="quantity"
-                                placeholder="Enter the number of products" name="quantity" value="{{product.quantity}}">
+                            <label for="quantityOfSizeL">Quantity of size L</label>
+                            <input type="text" class="form-control" id="quantityOfSizeL"
+                                placeholder="Enter the quantity of size L" name="quantityOfSizeL" value="{{product.quantityOfSizeL}}">
                         </div>
-                <button type="submit" class="btn btn-primary">Update product</button>
-            </form>
+                        <button type="submit" class="btn btn-primary">Update product</button>
+                    </form>
                 </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
     </div>
     <!-- END MAIN -->
-	<div class="clearfix"></div>
+    <div class="clearfix"></div>
 </div>

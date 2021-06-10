@@ -32,17 +32,15 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Stt</th>
-                                    <th scope="col">Name {{{sortable 'name' _sort}}}
-                                    </th>
-                                    <th scope="col">Price {{{sortable 'price' _sort}}}
-                                    </th>
-                                    <th>Category</th>
+                                    <th scope="col">Name {{{sortable 'name' _sort}}}</th>
+                                    <th scope="col">Price {{{sortable 'price' _sort}}}</th>
+                                    <th>League</th>
+                                    <th scope="col">Club</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Gender</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Size</th>
-                                    <th scope="col">Color</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Quantity of size S</th>
+                                    <th scope="col">Quantity of size M</th>
+                                    <th scope="col">Quantity of size L</th>
                                     <th scope="col">Edit</th>
                                 </tr>
                             </thead>
@@ -57,14 +55,14 @@
                                     <td scope="row">{{sum @index 1}}</td>
                                     <td><a href="/product/{{this.slug}}">{{this.name}}</a></td>
                                     <td>{{this.price}} </td>
-                                    <td>{{this.category}}</td>
+                                    <td>{{this.league}}</td>
+                                    <td>{{this.club}}</td>
                                     <td>{{this.description}}</td>
-                                    <td>{{this.gender}}</td>
                                     <td><img src="{{this.image}}" alt="{{this.name}}" style="width: 240px;"></td>
-                                    <td>{{this.size}}</td>
-                                    <td>{{this.color}}</td>
-                                    <td>{{this.quantity}}</td> 
-                                    <td>
+                                    <td>{{this.quantityOfSizeS}}</td>
+                                    <td>{{this.quantityOfSizeM}}</td>
+                                    <td>{{this.quantityOfSizeL}}</td>
+                                    <td style="display: flex; flex-direction: column;">
                                         <a type="button" href="/admin/{{this._id}}/edit-product" class="btn btn-link btn-outline-primary" style="min-width: 83px;">Edit</a>
                                         <a type="button" id="btn-delete" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{this._id}}" style="min-width: 83px;">Delete</a>
                                     </td>
