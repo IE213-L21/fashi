@@ -18,7 +18,11 @@ class ProductController {
     shop(req, res, next) {
         Product.find({})
         .then( (products) => {
-            res.render('product/shop', { products: multipleMongooseToObject(products) });
+            let numberOfProduct = products.length;
+            res.render('product/shop', {
+                products: multipleMongooseToObject(products),
+                numberOfProduct: numberOfProduct
+            });
         })
         .catch(next);
     }
