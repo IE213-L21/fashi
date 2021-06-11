@@ -1,4 +1,6 @@
 const Product = require('../models/product');
+const League = require('../models/league');
+const Club = require('../models/club');
 const { mongooseToObject } = require('../../util/mongoose')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 
@@ -18,8 +20,14 @@ class AdminController {
     }
 
     // Render page create product
-    createProduct(req, res) {
-        res.render('admin/create-product', { layout: 'admin' })
+    async createProduct(req, res) {
+        const leagues = await League.find({});
+        const clubs = await Club.find({});
+        res.render('admin/create-product', {
+            layout: 'admin',
+            leagues: multipleMongooseToObject(leagues),
+            clubs: multipleMongooseToObject(clubs)
+        })
     }
 
     // Save data from page create-product
@@ -94,6 +102,50 @@ class AdminController {
             default:
                 res.json({ message: 'Action invalid!' });
         }
+    }
+
+    // [GET] /admin/create-league
+    createLeague(req, res, next){
+        League.find({})
+        .then( (leagues) => {
+            res.render('admin/create-league', {
+                layout: 'admin',
+                leagues: multipleMongooseToObject(leagues),
+            });
+        })
+    }
+
+    // [POST] /admin/create-league
+    saveCreateLeague(req, res, next){
+        const data = req.body;
+        const newLeague = new League(data);
+        newLeague.save( (err) => {
+            if (err)
+                console.log(err);
+            res.redirect('/admin/create-league');
+        })
+    }
+
+    // [GET] /admin/create-club
+    createClub(req, res, next){
+        Club.find({})
+        .then( (clubs) => {
+            res.render('admin/create-club', {
+                layout: 'admin',
+                clubs: multipleMongooseToObject(clubs),
+            });
+        })
+    }
+
+    // [POST] /admin/create-club
+    saveCreateClub(req, res, next){
+        const data = req.body;
+        const newClub = new Club(data);
+        newClub.save( (err) => {
+            if (err)
+                console.log(err);
+            res.redirect('/admin/create-club');
+        })
     }
 }
 

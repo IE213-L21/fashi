@@ -1,0 +1,38 @@
+<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="container mt-4 mb-4">
+                    <form method="post" action="admin/create-league">
+                        <div class="form-group">
+                            <label for="name">League</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter league" name="name">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create League</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each leagues}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="clearfix"></div>
+</div>

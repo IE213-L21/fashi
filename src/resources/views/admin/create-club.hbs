@@ -1,0 +1,38 @@
+<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="container mt-4 mb-4">
+                    <form method="post" action="admin/create-club">
+                        <div class="form-group">
+                            <label for="name">Club</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter club" name="name">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Club</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each clubs}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="clearfix"></div>
+</div>

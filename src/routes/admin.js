@@ -18,6 +18,12 @@ const uploads = multer( { storage:storage } );
 router.get('/create-product', adminController.createProduct)
 router.post('/create-product', uploads.single('image'), adminController.sendCreateProduct)
 
+router.get('/create-league', adminController.createLeague)
+router.post('/create-league', adminController.saveCreateLeague)
+
+router.get('/create-club', adminController.createClub)
+router.post('/create-club', adminController.saveCreateClub)
+
 router.get('/:id/edit-product', uploads.single('image'), adminController.editProduct)
 router.put('/update/:id', uploads.single('image'), adminController.updateProduct)
 
