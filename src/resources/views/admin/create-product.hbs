@@ -3,60 +3,58 @@
     <div class="main">
         <!-- MAIN CONTENT -->
         <div class="main-content">
-            <div class="container-fluid">
-                <div class="container mt-4 mb-4">
-                    <form method="post" action="admin/create-product" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
-                        </div>
-                        <div class="form-group">
-                            <label for="league">Select league</label>
-                            <select class="form-control" name="league" id="league">
-                                {{#each leagues}}
-                                <option value="{{this.name}}">{{this.name}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="club">Select club</label>
-                            <select class="form-control" name="club" id="club">
-                                {{#each clubs}}
-                                <option value="{{this.name}}">{{this.name}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control" id="description" placeholder="Enter description"
-                                name="description">
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Image</label>
-                            <input type="file" name="image" class="form-control" id="image" />
-                        </div>
-                        <div class="form-group">
-                            <label for="quantityOfSizeS">Quantity of size S</label>
-                            <input type="text" class="form-control" id="quantityOfSizeS"
-                                placeholder="Enter the quantity of size S" name="quantityOfSizeS">
-                        </div>
-                        <div class="form-group">
-                            <label for="quantityOfSizeM">Quantity of size M</label>
-                            <input type="text" class="form-control" id="quantityOfSizeM"
-                                placeholder="Enter the quantity of size M" name="quantityOfSizeM">
-                        </div>
-                        <div class="form-group">
-                            <label for="quantityOfSizeL">Quantity of size L</label>
-                            <input type="text" class="form-control" id="quantityOfSizeL"
-                                placeholder="Enter the quantity of size L" name="quantityOfSizeL">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create Product</button>
-                    </form>
-                </div>
+            <div class="container-fluid mt-4 mb-4">
+                <form method="post" action="admin/create-product" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                    </div>
+                    <div class="form-group">
+                        <label for="league">Select league</label>
+                        <select class="form-control" name="league" id="league">
+                            {{#each leagues}}
+                            <option value="{{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="club">Select club</label>
+                        <select class="form-control" name="club" id="club">
+                            {{#each clubs}}
+                            <option value="{{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description" placeholder="Enter description"
+                            name="description">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" class="form-control" id="image" />
+                    </div>
+                    <div class="form-group">
+                        <label for="quantityOfSizeS">Quantity of size S</label>
+                        <input type="text" class="form-control" id="quantityOfSizeS"
+                            placeholder="Enter the quantity of size S" name="quantityOfSizeS">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantityOfSizeM">Quantity of size M</label>
+                        <input type="text" class="form-control" id="quantityOfSizeM"
+                            placeholder="Enter the quantity of size M" name="quantityOfSizeM">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantityOfSizeL">Quantity of size L</label>
+                        <input type="text" class="form-control" id="quantityOfSizeL"
+                            placeholder="Enter the quantity of size L" name="quantityOfSizeL">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Product</button>
+                </form>
             </div>
         </div>
         <!-- END MAIN CONTENT -->

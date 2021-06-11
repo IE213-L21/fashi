@@ -10,11 +10,11 @@ class AdminController {
     adminHome(req, res, next) {
         Promise.all([Product.find({}).sortable(req), Product.countDocumentsDeleted()])
             .then(([products, deletedCount]) =>
-                res.render('admin/index', { 
-                layout: 'admin',
-                products: multipleMongooseToObject(products),
-                deletedCount
-            }),
+                res.render('admin/index', {
+                    layout: 'admin',
+                    products: multipleMongooseToObject(products),
+                    deletedCount
+                }),
             )
             .catch(next)
     }
@@ -27,7 +27,7 @@ class AdminController {
             layout: 'admin',
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs)
-        })
+        });
     }
 
     // Save data from page create-product
@@ -41,13 +41,16 @@ class AdminController {
     }
 
     // Render page edit product
-    editProduct(req, res, next) {
-        Product.findById({ _id: req.params.id })
-            .then(product => res.render('admin/edit-product', {
-                layout: 'admin',
-                product: mongooseToObject(product)
-            }))
-            .catch(next)
+    async editProduct(req, res) {
+        const leagues = await League.find({});
+        const clubs = await Club.find({});
+        const product = await Product.findById({ _id: req.params.id })
+        res.render('admin/edit-product', {
+            layout: 'admin',
+            product: mongooseToObject(product),
+            clubs: multipleMongooseToObject(clubs),
+            leagues: multipleMongooseToObject(leagues),
+        })
     }
 
     //Update Product from form edit product
@@ -105,21 +108,21 @@ class AdminController {
     }
 
     // [GET] /admin/create-league
-    createLeague(req, res, next){
+    createLeague(req, res, next) {
         League.find({})
-        .then( (leagues) => {
-            res.render('admin/create-league', {
-                layout: 'admin',
-                leagues: multipleMongooseToObject(leagues),
-            });
-        })
+            .then((leagues) => {
+                res.render('admin/create-league', {
+                    layout: 'admin',
+                    leagues: multipleMongooseToObject(leagues),
+                });
+            })
     }
 
     // [POST] /admin/create-league
-    saveCreateLeague(req, res, next){
+    saveCreateLeague(req, res, next) {
         const data = req.body;
         const newLeague = new League(data);
-        newLeague.save( (err) => {
+        newLeague.save((err) => {
             if (err)
                 console.log(err);
             res.redirect('/admin/create-league');
@@ -127,21 +130,21 @@ class AdminController {
     }
 
     // [GET] /admin/create-club
-    createClub(req, res, next){
+    createClub(req, res, next) {
         Club.find({})
-        .then( (clubs) => {
-            res.render('admin/create-club', {
-                layout: 'admin',
-                clubs: multipleMongooseToObject(clubs),
-            });
-        })
+            .then((clubs) => {
+                res.render('admin/create-club', {
+                    layout: 'admin',
+                    clubs: multipleMongooseToObject(clubs),
+                });
+            })
     }
 
     // [POST] /admin/create-club
-    saveCreateClub(req, res, next){
+    saveCreateClub(req, res, next) {
         const data = req.body;
         const newClub = new Club(data);
-        newClub.save( (err) => {
+        newClub.save((err) => {
             if (err)
                 console.log(err);
             res.redirect('/admin/create-club');
