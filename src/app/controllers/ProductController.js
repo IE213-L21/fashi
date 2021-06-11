@@ -78,7 +78,7 @@ class ProductController {
     }
     
     // [GET] /
-    productDetails(req, res, next) {
+    productDetail(req, res, next) {
         Product.findOne( {slug: req.params.slug} )
         .then( (product) => {
             res.render('product/product-detail', {

@@ -11,6 +11,6 @@ router.post('/search', productController.searchRealTime)
 router.get('/search', productController.search);
 router.get('/leagues/:league', productController.showLeague);
 router.get('/clubs/:club', productController.showClub);
-
+router.get('/:slug', productController.productDetail);
 
 module.exports = router ;
