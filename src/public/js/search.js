@@ -1,9 +1,9 @@
 let search = $("#livesearch");
 
-function showResult(str){
-    if(str.length === 0){
+function showResult(str) {
+    if (str.length === 0) {
         search.addClass("hide")
-    }else{
+    } else {
         search.removeClass("hide");
     }
 

@@ -21,25 +21,30 @@ class ProductController {
         const products = await Product.find({});
         const leagues = await League.find({});
         const clubs = await Club.find({})
-        let numberOfProduct = products.length;
         res.render('product/shop', {
                 products: multipleMongooseToObject(products),
-                numberOfProduct: numberOfProduct,
                 leagues: multipleMongooseToObject(leagues),
                 clubs: multipleMongooseToObject(clubs)
         });
     }
 
     search(req, res,next) {
-        Product.find({name:req.query.name})
-        .then( (products) => {
-            res.render('product/search', { products: multipleMongooseToObject(products) });
+        const keyword = req.query.name;
+        Promise.all([Product.find({}), League.find({}), Club.find({})])
+        .then( ([products, leagues, clubs]) => {
+            products = products.filter( (product) => {
+                return product.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+            })
+            res.render('product/search', {
+                products: multipleMongooseToObject(products),
+                leagues: multipleMongooseToObject(leagues),
+                clubs: multipleMongooseToObject(clubs),
+            });
         })
         .catch(next);
     }
 
     searchRealTime(req, res, next){
-        //Declare variables
         let hint = "";
         let response = "";
         let searchQ = req.body.search.toLowerCase(); 
@@ -61,12 +66,11 @@ class ProductController {
                     }
                 })
             }
-            if(hint === ""){
-                response = "no suggestion"
-            }else{
+            if (hint === ""){
+                response = "No product matched"
+            } else{
                 response = hint;
             }
-        
             res.send({response: response});
         });
         }
@@ -88,7 +92,7 @@ class ProductController {
         .catch(next);
     }
 
-    // [GET] /leagues/:league
+    // [GET] product/leagues/:league
     async showLeague(req, res){
         const clubs = await Club.find({});
         const leagues = await League.find({});
@@ -101,7 +105,7 @@ class ProductController {
         })
     }
 
-    // [GET] /clubs/:club
+    // [GET] product/clubs/:club
     async showClub(req, res){
         const clubs = await Club.find({});
         const leagues = await League.find({});
@@ -112,6 +116,15 @@ class ProductController {
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs)
         })
+    }
+
+    // [GET] /product/add-to-cart/:id
+    addProductToCart(req, res, next){
+        Product.findOne({ _id: req.params.id })
+        .then( (product) => {
+            localStorage.setItem(product.name, 1);
+        })
+        .catch(next);
     }
 }
 
