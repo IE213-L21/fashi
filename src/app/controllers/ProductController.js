@@ -1,4 +1,6 @@
 const Product = require('../models/product')
+const League = require('../models/league')
+const Club = require('../models/club')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 const { mongooseToObject } = require('../../util/mongoose')
 
@@ -15,16 +17,17 @@ class ProductController {
     }
 
     // [GET] /
-    shop(req, res, next) {
-        Product.find({})
-        .then( (products) => {
-            let numberOfProduct = products.length;
-            res.render('product/shop', {
+    async showAllProducts(req, res) {
+        const products = await Product.find({});
+        const leagues = await League.find({});
+        const clubs = await Club.find({})
+        let numberOfProduct = products.length;
+        res.render('product/shop', {
                 products: multipleMongooseToObject(products),
-                numberOfProduct: numberOfProduct
-            });
-        })
-        .catch(next);
+                numberOfProduct: numberOfProduct,
+                leagues: multipleMongooseToObject(leagues),
+                clubs: multipleMongooseToObject(clubs)
+        });
     }
 
     search(req, res,next) {
@@ -83,6 +86,32 @@ class ProductController {
             });
         })
         .catch(next);
+    }
+
+    // [GET] /leagues/:league
+    async showLeague(req, res){
+        const clubs = await Club.find({});
+        const leagues = await League.find({});
+        const leagueNeededRender = await League.findOne({ slug: req.params.league})
+        const products = await Product.find({ league: leagueNeededRender.name });
+        res.render('product/shop', {
+            products: multipleMongooseToObject(products),
+            leagues: multipleMongooseToObject(leagues),
+            clubs: multipleMongooseToObject(clubs)
+        })
+    }
+
+    // [GET] /clubs/:club
+    async showClub(req, res){
+        const clubs = await Club.find({});
+        const leagues = await League.find({});
+        const clubFound = await Club.findOne({ slug: req.params.club})
+        const products = await Product.find({ club: clubFound.name });
+        res.render('product/shop', {
+            products: multipleMongooseToObject(products),
+            leagues: multipleMongooseToObject(leagues),
+            clubs: multipleMongooseToObject(clubs)
+        })
     }
 }
 
