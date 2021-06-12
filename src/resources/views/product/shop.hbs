@@ -65,63 +65,62 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="data-container">
-                    <div class="product-list">
-                        <div class="row">
-                            {{#each products}}
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="{{this.image}}" alt="{{this.name}}">
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
+                    <div id="data-container">
+                        <div class="product-list">
+                            <div class="row">
+                                {{#each products}}
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img src="{{this.image}}" alt="{{this.name}}">
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                            <ul>
+                                                <li class="w-icon active"><a href="/product/add-to-cart/{{this._id}}"><i
+                                                            class="icon_bag_alt"></i></a></li>
+                                                <li class="quick-view"><a href="/product/{{this.slug}}">+ Quick View</a>
+                                                </li>
+                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            </ul>
                                         </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="/product/add-to-cart/{{this._id}}"><i
-                                                        class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="/product/{{this.slug}}">+ Quick View</a>
-                                            </li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                        <a href="#">
-                                            <h5>{{this.name}}</h5>
-                                        </a>
-                                        <div class="product-price">{{this.price}}.000đ</div>
+                                        <div class="pi-text">
+                                            <a href="#">
+                                                <h5>{{this.name}}</h5>
+                                            </a>
+                                            <div class="product-price">{{this.price}}.000đ</div>
+                                        </div>
                                     </div>
                                 </div>
+                                {{else}}
+                                <h2 class="mb-4">No products matched</h2>
+                                {{/each}}
                             </div>
-                            {{else}}
-                            <h2 class="mb-4">No products matched</h2>
-                            {{/each}}
                         </div>
                     </div>
+                    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" aria-label="Previous" id="btn_prev">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link page-link-inner" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link page-link-inner" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link page-link-inner" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" aria-label="Next" id="btn_next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="totalPage" style="display: none;">{{totalPage}}</div>
+                        <div id="currentPage" style="display: none;">{{page}}</div>
+                    </nav>
                 </div>
-                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" aria-label="Previous" id="btn_prev">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link page-link-inner" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link page-link-inner" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link page-link-inner" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" aria-label="Next" id="btn_next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div id="totalPage" style="display: none;">{{totalPage}}</div>
-                    <div id="currentPage" style="display: none;">{{page}}</div>
-                </nav>
             </div>
         </div>
-    </div>
 </section>
 <!-- Product Shop Section End -->

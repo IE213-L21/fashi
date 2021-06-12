@@ -5,10 +5,14 @@ const bodyParser = require('body-parser')
 const hbs  = require('express-handlebars')
 const methodOverride = require('method-override');
 const path = require('path')
+const cookieParser = require('cookie-parser')
+const nanoid = require('nanoid')
+
 const Handlebars = require('./helpers/handlebars');
 const route = require('./routes')
 const db = require('./config/db');
-const sortMiddleware = require('./app/middlewares/sortMiddleware')
+const sortMiddleware = require('./app/middlewares/sortMiddleware');
+const setSession = require('./app/middlewares/setSession');
 const app = express();
 const port = 3000
 
@@ -17,6 +21,8 @@ app.use(express.urlencoded({
   extended: true
 })); // parse application/x-www-form-urlencoded
 app.use(express.json()); // parse application/json
+app.use(cookieParser('arsenalrobertpires'));
+app.use(setSession);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 

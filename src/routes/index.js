@@ -4,8 +4,6 @@ const accountRouter = require('./account');
 const productRouter = require('./product');
 const adminRouter = require('./admin');
 
-
-
 function route(app) {
     app.use('/blogs', blogRouter);
     app.use('/account', accountRouter);
