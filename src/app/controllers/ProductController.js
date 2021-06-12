@@ -21,11 +21,11 @@ class ProductController {
         try {
             const leagues = await League.find({});
             const clubs = await Club.find({});
-            const totalProducts = await Product.find({});
+            const numberOfProducts = await Product.countDocuments({});
             const productsPerPage = 4;
             const page = req.query.page || 1;
             const begin = (page - 1) * productsPerPage;
-            const totalPage = Math.ceil(totalProducts.length / productsPerPage);
+            const totalPage = Math.ceil(numberOfProducts / productsPerPage);
             const products = await Product
                 .find({ deleted: "false" })
                 .skip(begin)
@@ -37,19 +37,10 @@ class ProductController {
                 totalPage: totalPage,
                 page: page,
             });
-        } catch(err){
+        } catch (err) {
             if (err)
                 next(err);
         }
-    }
-
-    // [GET] /admin/product-api
-    showAPIProducts(req, res, next) {
-        Product.find({ deleted: "false" })
-        .then( (products) => {
-            res.json(products);
-        })
-        .catch(next);
     }
 
     search(req, res, next) {
@@ -117,15 +108,25 @@ class ProductController {
     }
 
     // [GET] product/leagues/:league
-    async showLeague(req, res) {
+    async showLeague(req, res, next) {
         const clubs = await Club.find({});
         const leagues = await League.find({});
-        const leagueNeededRender = await League.findOne({ slug: req.params.league })
-        const products = await Product.find({ league: leagueNeededRender.name });
+        const leagueNeededRender = await League.findOne({ slug: req.params.league });
+        const numberOfProducts = await Product.countDocuments({ league: leagueNeededRender.name });
+        const productsPerPage = 4;
+        const page = req.query.page || 1;
+        const begin = (page - 1) * productsPerPage;
+        const totalPage = Math.ceil(numberOfProducts / productsPerPage);
+        const products = await Product
+            .find({ league: leagueNeededRender.name })
+            .skip(begin)
+            .limit(productsPerPage);
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
-            clubs: multipleMongooseToObject(clubs)
+            clubs: multipleMongooseToObject(clubs),
+            totalPage: totalPage,
+            page: page,
         })
     }
 
@@ -133,12 +134,22 @@ class ProductController {
     async showClub(req, res) {
         const clubs = await Club.find({});
         const leagues = await League.find({});
-        const clubFound = await Club.findOne({ slug: req.params.club })
-        const products = await Product.find({ club: clubFound.name });
+        const clubFound = await Club.findOne({ slug: req.params.club });
+        const numberOfProducts = await Product.countDocuments({ club: clubFound.name });
+        const productsPerPage = 4;
+        const page = req.query.page || 1;
+        const begin = (page - 1) * productsPerPage;
+        const totalPage = Math.ceil(numberOfProducts / productsPerPage);
+        const products = await Product
+            .find({ club: clubFound.name })
+            .skip(begin)
+            .limit(productsPerPage);
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
-            clubs: multipleMongooseToObject(clubs)
+            clubs: multipleMongooseToObject(clubs),
+            totalPage: totalPage,
+            page: page,
         })
     }
 
