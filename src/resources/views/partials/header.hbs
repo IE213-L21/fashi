@@ -1,156 +1,159 @@
-      <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-  
-  <!-- Header Section Begin -->
-    <header class="header-section">
-        <div class="header-top">
-            <div class="container">
-                <div class="ht-left">
-                    <div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                       fashi@gmail.com
-                    </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        0901349285
-                    </div>
-                </div>
-                <div class="ht-right">
-                    <a href="account/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
-                                data-title="English">English</option>
-                            <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Bangladesh">German </option>
-                        </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="header-top">
         <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="/">
-                                <img src="img/logo.png">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">Search product</button>
-                            <div class="input-group">
-                                <form method="get" action="/product/search">
-                                    <input type="text" placeholder="What do you need?" name="name" autocomplete="off" onkeyup="showResult(this.value)" style="color:black;height:48px">
-                                    <div id="livesearch" class="hide"></div>
-                                    <button type="submit"><i class="ti-search"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 text-right col-md-3">
-                        <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon">
-                                <a href="#">
-                                    <i class="icon_bag_alt"></i>
-                                    <span>3</span>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                {{#each productsInCart}}
-                                                <tr>
-                                                    <td class="si-pic"><img src="{{this.image}}"></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>{{this.price}}.000đ x 1</p>
-                                                            <h6>{{this.name}}</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                {{/each}}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="product/shopping-cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="product/check-out" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="ht-left">
+                <div class="mail-service">
+                    <i class=" fa fa-envelope"></i>
+                    fashi@gmail.com
+                </div>
+                <div class="phone-service">
+                    <i class=" fa fa-phone"></i>
+                    0901349285
+                </div>
+            </div>
+            <div class="ht-right">
+                <a href="account/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                <div class="lan-selector">
+                    <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                        <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                            English</option>
+                        <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh">
+                            German </option>
+                    </select>
+                </div>
+                <div class="top-social">
+                    <a href="#"><i class="ti-facebook"></i></a>
+                    <a href="#"><i class="ti-twitter-alt"></i></a>
+                    <a href="#"><i class="ti-linkedin"></i></a>
+                    <a href="#"><i class="ti-pinterest"></i></a>
                 </div>
             </div>
         </div>
-        <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>All departments</span>
-                        <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
-                        </ul>
+    </div>
+    <div class="container">
+        <div class="inner-header">
+            <div class="row">
+                <div class="col-lg-2 col-md-2">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="img/logo.png">
+                        </a>
                     </div>
                 </div>
-                <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/product">Product</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="blogs/blog-details">Blog Details</a></li>
-                                <li><a href="product/shopping-cart">Shopping Cart</a></li>
-                                <li><a href="product/check-out">Checkout</a></li>
-                                <li><a href="blogs/faq">Faq</a></li>
-                                <li><a href="account/register">Register</a></li>
-                                <li><a href="account/login">Login</a></li>
-                            </ul>
+                <div class="col-lg-7 col-md-7">
+                    <div class="advanced-search">
+                        <button type="button" class="category-btn">Search product</button>
+                        <div class="input-group">
+                            <form method="get" action="/product/search">
+                                <input type="text" placeholder="What do you need?" name="name" autocomplete="off"
+                                    onkeyup="showResult(this.value)" style="color:black;height:48px">
+                                <div id="livesearch" class="hide"></div>
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right col-md-3">
+                    <ul class="nav-right">
+                        <li class="cart-icon">
+                            <a href="#">
+                                <i class="icon_bag_alt"></i>
+                                <span>{{totalProducts}}</span>
+                            </a>
+                            <div class="cart-hover">
+                                <div class="select-items">
+                                    <table>
+                                        <tbody>
+                                            {{#each productsInCart}}
+                                            <tr>
+                                                <td class="si-pic">
+                                                    <a href="/product/{{this.slug}}">
+                                                        <img src="{{this.image}}">
+                                                    </a>
+                                                </td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <p>{{this.price}}.000đ x {{this.quantityInCart}}</p>
+                                                        <h6>
+                                                            <a href="/product/{{this.slug}}">{{this.name}}</a>
+                                                        </h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close"></i>
+                                                </td>
+                                            </tr>
+                                            {{else}}
+                                                <h5 class="mb-4 text-center">No products in cart</h5>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="select-total">
+                                    <span>total:</span>
+                                    <h5>{{totalPriceInCart}}.000đ</h5>
+                                </div>
+                                <div class="select-button">
+                                    <a href="product/shopping-cart/{{session.sessionId}}" class="primary-btn view-card">VIEW CARD</a>
+                                    <a href="product/check-out" class="primary-btn checkout-btn">CHECK OUT</a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
-                </nav>
-                <div id="mobile-menu-wrap"></div>
+                </div>
             </div>
         </div>
-    </header>
-    <!-- Header End -->
+    </div>
+    <div class="nav-item">
+        <div class="container">
+            <div class="nav-depart">
+                <div class="depart-btn">
+                    <i class="ti-menu"></i>
+                    <span>All departments</span>
+                    <ul class="depart-hover">
+                        <li class="active"><a href="#">Women’s Clothing</a></li>
+                        <li><a href="#">Men’s Clothing</a></li>
+                        <li><a href="#">Underwear</a></li>
+                        <li><a href="#">Kid's Clothing</a></li>
+                        <li><a href="#">Brand Fashion</a></li>
+                        <li><a href="#">Accessories/Shoes</a></li>
+                        <li><a href="#">Luxury Brands</a></li>
+                        <li><a href="#">Brand Outdoor Apparel</a></li>
+                    </ul>
+                </div>
+            </div>
+            <nav class="nav-menu mobile-menu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/product">Product</a></li>
+                    <li><a href="#">Collection</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Men's</a></li>
+                            <li><a href="#">Women's</a></li>
+                            <li><a href="#">Kid's</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="#">Pages</a>
+                        <ul class="dropdown">
+                            <li><a href="blogs/blog-details">Blog Details</a></li>
+                            <li><a href="product/shopping-cart">Shopping Cart</a></li>
+                            <li><a href="product/check-out">Checkout</a></li>
+                            <li><a href="blogs/faq">Faq</a></li>
+                            <li><a href="account/register">Register</a></li>
+                            <li><a href="account/login">Login</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->

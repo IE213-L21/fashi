@@ -1,7 +1,7 @@
 const Handlebars = require('handlebars');
 
 module.exports = {
-    sum: (a,b) => a+b,
+    sum: (a,b) => a + b,
 
     sortable: (field, sort) => {
         const sortType = field === sort.column ? sort.type : 'default';

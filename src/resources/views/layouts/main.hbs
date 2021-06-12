@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="app">
-        {{>header products= products}}
+        {{>header products= products totalProducts = totalProducts totalPriceInCart = totalPriceInCart session = session}}
         <div class="container">
             {{{body}}}
         </div>
@@ -50,6 +50,7 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/badge-cart.js"></script>
     <script src="js/pagination.js"></script>
 </body>
 </html>

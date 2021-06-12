@@ -13,7 +13,6 @@ function ShowHidePreNextBtn() {
     } else {
         btn_prev.style.visibility = 'visible';
     }
-    console.log(maxStage)
     if (current_stage == maxStage) {
         btn_next.style.visibility = 'hidden';
     } else {

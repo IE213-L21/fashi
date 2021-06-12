@@ -1,7 +1,7 @@
 const Product = require('../models/product')
 const League = require('../models/league')
 const Club = require('../models/club')
-const SessionID = require('../models/sessionID')
+const Session = require('../models/sessionID')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 const { mongooseToObject } = require('../../util/mongoose')
 
@@ -21,15 +21,21 @@ class ProductController {
     async showAllProducts(req, res, next) {
         try {
             const sessionID = req.signedCookies.sessionId;
-            const session = await SessionID.findOne({ sessionId: sessionID });
-            const productsInCart = [];
-            for (let [key, value] of  session.cart.entries()) {
-                let productInCart = await Product.findOne( { _id: key })
-                console.log(productInCart);
-                Object.assign(productInCart, { quantityInCart: 2 });
-                productsInCart.push(productInCart);
+            let session = await Session.findOne({ sessionId: sessionID });
+            let totalProducts = 0;
+            let productsInCart = [];
+            let totalPriceInCart = 0;
+            if (session) {
+                totalProducts = session.totalProducts;
+                for (let [key, value] of session.cart.entries()) {
+                    let productInCart = await Product.findOne({ _id: key }).lean();
+                    Object.assign(productInCart, { quantityInCart: value });
+                    totalPriceInCart += productInCart.price * value;
+                    productsInCart.push(productInCart);
+                }
             }
-            console.log(productsInCart);
+            else
+                session = [];
             const leagues = await League.find({});
             const clubs = await Club.find({});
 
@@ -48,7 +54,10 @@ class ProductController {
                 clubs: multipleMongooseToObject(clubs),
                 totalPage: totalPage,
                 page: page,
-                productsInCart: multipleMongooseToObject(productsInCart),
+                productsInCart: productsInCart,
+                totalProducts: totalProducts,
+                totalPriceInCart: totalPriceInCart,
+                session: mongooseToObject(session),
             });
         } catch (err) {
             if (err)
@@ -170,17 +179,18 @@ class ProductController {
     addProductToCart(req, res, next) {
         let productID = req.params.id;
         let sessionID = req.signedCookies.sessionId;
-        SessionID.findOne({ sessionId: sessionID })
-        .then( (sessionID) => {
-            let count = sessionID.cart.get(productID) || 0;
-            sessionID.cart.set(productID, count + 1);
-            sessionID.save( (err) => {
-                if (err)
-                    console.log(err);
-                res.redirect('back');
+        Session.findOne({ sessionId: sessionID })
+            .then((session) => {
+                let count = session.cart.get(productID) || 0;
+                session.cart.set(productID, count + 1);
+                session.totalProducts++;
+                session.save((err) => {
+                    if (err)
+                        console.log(err);
+                    res.redirect('back');
+                })
             })
-        })
-        .catch(next);
+            .catch(next);
     }
 }
 
