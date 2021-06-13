@@ -13,6 +13,11 @@ const route = require('./routes')
 const db = require('./config/db');
 const sortMiddleware = require('./app/middlewares/sortMiddleware');
 const setSession = require('./app/middlewares/setSession');
+const session = require('express-session')
+const passport = require('passport')
+const flash = require('connect-flash')
+/* Khai báo để sử dụng kịch bản passport */
+const passportEX = require('./config/passport/passport');
 const app = express();
 const port = 3000
 
@@ -32,6 +37,18 @@ app.use(methodOverride('_method'));
 
 // Use sortMiddleware
 app.use(sortMiddleware);  
+
+
+/* Cấu hình passport */
+passportEX
+app.use(session({
+  secret : 'secured_key',
+  resave : true,
+  saveUninitialized : true,
+}))
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Template engine
 app.engine(
