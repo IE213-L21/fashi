@@ -12,6 +12,7 @@ router.get('/search', productController.search);
 router.get('/leagues/:league', productController.showLeague);
 router.get('/clubs/:club', productController.showClub);
 router.get('/add-to-cart/:id', productController.addProductToCart);
+router.get('/remove-from-cart/:id', productController.addProductToCart);
 router.get('/:slug', productController.productDetail);
 
 module.exports = router ;
