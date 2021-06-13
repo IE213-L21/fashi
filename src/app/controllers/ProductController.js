@@ -35,12 +35,12 @@ class ProductController {
                 }
             }
             else
-                session = [];
+                session = {};
             const leagues = await League.find({});
             const clubs = await Club.find({});
 
             const numberOfProducts = await Product.countDocuments({});
-            const productsPerPage = 4;
+            const productsPerPage = 6;
             const page = req.query.page || 1;
             const begin = (page - 1) * productsPerPage;
             const totalPage = Math.ceil(numberOfProducts / productsPerPage);
@@ -135,7 +135,7 @@ class ProductController {
         const leagues = await League.find({});
         const leagueNeededRender = await League.findOne({ slug: req.params.league });
         const numberOfProducts = await Product.countDocuments({ league: leagueNeededRender.name });
-        const productsPerPage = 4;
+        const productsPerPage = 6;
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
@@ -158,7 +158,7 @@ class ProductController {
         const leagues = await League.find({});
         const clubFound = await Club.findOne({ slug: req.params.club });
         const numberOfProducts = await Product.countDocuments({ club: clubFound.name });
-        const productsPerPage = 4;
+        const productsPerPage = 6;
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
@@ -191,6 +191,28 @@ class ProductController {
                 })
             })
             .catch(next);
+    }
+
+    // [GET] /product/remove-from-cart/:id
+    removeProductFromCart(req, res, next) {
+        let productID = req.params.id;
+        let sessionID = req.signedCookies.sessionId;
+        Session.findOne({ sessionId: sessionID })
+        .then( (session) => {
+            let count = session.cart.get(productID);
+            if (count == 1) {
+                session.cart.delete(productID);
+            }
+            else
+                session.cart.set(productID, count - 1);
+            session.totalProducts--;
+            session.save((err) => {
+                if (err)
+                    console.log(err);
+                res.redirect('back');
+            })
+        })
+        .catch(next);
     }
 }
 

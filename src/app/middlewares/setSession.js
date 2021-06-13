@@ -5,7 +5,8 @@ function setSession(req, res, next) {
     let id = nanoid();
     if (!req.signedCookies.sessionId) {
         res.cookie('sessionId', id, {
-            signed: true
+            signed: true,
+            expires: new Date(Date.now() +  30 * 24 * 3600000)
         });
         const newSessionID = new SessionID({
             sessionId: id,
