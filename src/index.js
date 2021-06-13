@@ -43,8 +43,8 @@ app.use(sortMiddleware);
 passportEX
 app.use(session({
   secret : 'secured_key',
-  resave : false,
-  saveUninitialized : false
+  resave : true,
+  saveUninitialized : true,
 }))
 app.use(flash());
 app.use(passport.initialize());

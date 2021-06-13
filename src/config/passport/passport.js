@@ -1,6 +1,7 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../../app/models/user');
+const passport = require('passport');
+const session = require('express-session');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../../app/models/user');
 const bcrypt = require('bcrypt');
 // generate salt to hash password
 const saltRounds = 10;
@@ -38,7 +39,6 @@ passport.use('local.register', new LocalStrategy({
       newUser.info.firstname = req.body.firstname;
       newUser.info.lastname = req.body.lastname;
       newUser.local.email = email;
-
       bcrypt.hash( password, saltRounds, function(err, hash) {
         newUser.local.password=hash;
           newUser.save(function(err, result) {
@@ -63,14 +63,16 @@ passport.use('local.login', new LocalStrategy({
         'local.email': email
     })
         .then(function (user) {
-            console.log(user.local.password)
-            console.log(password)
             bcrypt.compare(password, user.local.password, function (err,result) {
-                console.log(result)
+
                 if (err) { return done(err); }
                 if(!result) {
                     return done(null, false, { message: 'Incorrect username and password' });
                 }
+                req.session.User = {
+                    name:user.info.firstname,
+                    email:user.local.email
+                  }                
                 return done(null, user);
             })
         })
