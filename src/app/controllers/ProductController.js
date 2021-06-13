@@ -22,15 +22,16 @@ class ProductController {
         try {
             const sessionID = req.signedCookies.sessionId;
             let session = await Session.findOne({ sessionId: sessionID });
-            let totalProducts = 0;
+            let totalProductsInCart = 0;
             let productsInCart = [];
             let totalPriceInCart = 0;
             if (session) {
-                totalProducts = session.totalProducts;
+                totalProductsInCart = session.totalProducts;
                 for (let [key, value] of session.cart.entries()) {
                     let productInCart = await Product.findOne({ _id: key }).lean();
-                    Object.assign(productInCart, { quantityInCart: value });
-                    totalPriceInCart += productInCart.price * value;
+                    let totalPriceEachProductInCart = productInCart.price * value;
+                    Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
+                    totalPriceInCart += totalPriceEachProductInCart;
                     productsInCart.push(productInCart);
                 }
             }
@@ -55,7 +56,7 @@ class ProductController {
                 totalPage: totalPage,
                 page: page,
                 productsInCart: productsInCart,
-                totalProducts: totalProducts,
+                totalProductsInCart: totalProductsInCart,
                 totalPriceInCart: totalPriceInCart,
                 session: mongooseToObject(session),
             });
@@ -114,8 +115,36 @@ class ProductController {
     }
 
     // [GET] /
-    shoppingCart(req, res) {
-        res.render('product/shopping-cart');
+    async shoppingCart(req, res) {
+        try {
+            const sessionID = req.signedCookies.sessionId;
+            let session = await Session.findOne({ sessionId: sessionID });
+            let totalProductsInCart = 0;
+            let productsInCart = [];
+            let totalPriceInCart = 0;
+            if (session) {
+                totalProductsInCart = session.totalProducts;
+                for (let [key, value] of session.cart.entries()) {
+                    let productInCart = await Product.findOne({ _id: key }).lean();
+                    let totalPriceEachProductInCart = productInCart.price * value;
+                    Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
+                    totalPriceInCart += totalPriceEachProductInCart;
+                    productsInCart.push(productInCart);
+                }
+            }
+            else
+                session = {};
+            res.render('product/shopping-cart', {
+                productsInCart: productsInCart,
+                totalProductsInCart: totalProductsInCart,
+                totalPriceInCart: totalPriceInCart,
+                session: mongooseToObject(session),
+            });
+        } catch(err) {
+            if (err)
+                console.log(err);
+            next(err);
+        };
     }
 
     // [GET] /
@@ -198,21 +227,17 @@ class ProductController {
         let productID = req.params.id;
         let sessionID = req.signedCookies.sessionId;
         Session.findOne({ sessionId: sessionID })
-        .then( (session) => {
-            let count = session.cart.get(productID);
-            if (count == 1) {
+            .then((session) => {
+                let count = session.cart.get(productID);
                 session.cart.delete(productID);
-            }
-            else
-                session.cart.set(productID, count - 1);
-            session.totalProducts--;
-            session.save((err) => {
-                if (err)
-                    console.log(err);
-                res.redirect('back');
+                session.totalProducts -= count;
+                session.save((err) => {
+                    if (err)
+                        console.log(err);
+                    res.redirect('back');
+                })
             })
-        })
-        .catch(next);
+            .catch(next);
     }
 }
 
