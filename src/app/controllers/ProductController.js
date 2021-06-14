@@ -20,23 +20,11 @@ class ProductController {
     // [GET] /
     async showAllProducts(req, res, next) {
         try {
-            const sessionID = req.signedCookies.sessionId;
-            let session = await Session.findOne({ sessionId: sessionID });
-            let totalProductsInCart = 0;
-            let productsInCart = [];
-            let totalPriceInCart = 0;
-            if (session) {
-                totalProductsInCart = session.totalProducts;
-                for (let [key, value] of session.cart.entries()) {
-                    let productInCart = await Product.findOne({ _id: key }).lean();
-                    let totalPriceEachProductInCart = productInCart.price * value;
-                    Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
-                    totalPriceInCart += totalPriceEachProductInCart;
-                    productsInCart.push(productInCart);
-                }
-            }
-            else
-                session = {};
+            let session = res.locals.session;
+            let totalProductsInCart = res.locals.totalProductsInCart;
+            let productsInCart = res.locals.productsInCart;
+            let totalPriceInCart = res.locals.totalPriceInCart;
+
             const leagues = await League.find({});
             const clubs = await Club.find({});
 
@@ -58,7 +46,7 @@ class ProductController {
                 productsInCart: productsInCart,
                 totalProductsInCart: totalProductsInCart,
                 totalPriceInCart: totalPriceInCart,
-                session: mongooseToObject(session),
+                session: session,
             });
         } catch (err) {
             if (err)

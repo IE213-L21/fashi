@@ -10,7 +10,6 @@ $(document).ready(function(){
         let totalPriceOfCart = 0;
         $('.total-price-each-product').each( function() {
             totalPriceOfCart += parseInt($(this).text().split('.')[0]);
-            console.log('')
         })
         $('.cart-total > span').text(totalPriceOfCart + '.000đ');
     })

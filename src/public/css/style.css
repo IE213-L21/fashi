@@ -565,7 +565,7 @@ ol {
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td.si-close {
 	color: #252525;
-	font-size: 16px;
+	font-size: 20px;
 	cursor: pointer;
 }
 
@@ -2714,7 +2714,7 @@ ol {
 }
 
 .cart-table table tr td.close-td {
-	font-size: 16px;
+	font-size: 20px;
 	color: #252525;
 	width: 8%;
 }

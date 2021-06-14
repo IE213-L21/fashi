@@ -53,9 +53,7 @@
                                 </td>
                                 <td class="total-price first-row total-price-each-product">{{this.totalPrice}}.000đ</td>
                                 <td class="close-td first-row">
-                                    <i class="ti-close">
-                                        <a href="/product/remove-from-cart/{{this._id}}">Delete</a>
-                                    </i>
+                                    <a href="/product/remove-from-cart/{{this._id}}">X</a>
                                 </td>
                             </tr>
                             {{/each}}
@@ -89,3 +87,16 @@
     </div>
 </section>
 <!-- Shopping Cart Section End -->
+
+<form>
+    <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" id="size" name="size">
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="text" class="form-control" id="quantity" name="quantity">
+    </div>
+</form>
+
+<script src="js/cart-page.js"></script>
