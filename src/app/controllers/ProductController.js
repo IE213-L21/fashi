@@ -21,6 +21,7 @@ class ProductController {
     async showAllProducts(req, res, next) {
         try {
             let session = res.locals.session;
+            session = session.toObject();
             let totalProductsInCart = res.locals.totalProductsInCart;
             let productsInCart = res.locals.productsInCart;
             let totalPriceInCart = res.locals.totalPriceInCart;
