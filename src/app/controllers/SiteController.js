@@ -6,29 +6,52 @@ class SiteController {
     // [GET] /
     index(req, res) {
         if(req.isAuthenticated()){
-            console.log("đã đăng nhập")
             User.find({'info.firstname':req.session.User.name})
-                .then((user)=>{
-                    console.log(user)
+                .then((user)=>{                   
                     const username = user.map(user=>user=user.toObject())
+                    const role = username[0].role==='admin' ? 'admin' : ''
                     res.render('index',{
-                        user: username[0].info
+                        user: username[0].info,
+                        role
                     })
                 })
         }else{
-            console.log("chưa đăng nhập")
             res.render('index')
         }
     }
 
     //trang liên hệ
     contact(req, res){
-        res.render('contact');
-    }
+        if(req.isAuthenticated()){
+            User.find({'info.firstname':req.session.User.name})
+                .then((user)=>{                   
+                    const username = user.map(user=>user=user.toObject())
+                    const role = username[0].role==='admin' ? 'admin' : ''
+                    res.render('contact',{
+                        user: username[0].info,
+                        role
+                    })
+                })
+        }else{
+            res.render('contact');
+        }
+        }
 
    //trang không biết
     main(req, res){
-        res.render('main');
+        if(req.isAuthenticated()){
+            User.find({'info.firstname':req.session.User.name})
+                .then((user)=>{                   
+                    const username = user.map(user=>user=user.toObject())
+                    const role = username[0].role==='admin' ? 'admin' : ''
+                    res.render('main',{
+                        user: username[0].info,
+                        role
+                    })
+                })
+        }else{           
+            res.render('main');
+        }
     }
 }
 

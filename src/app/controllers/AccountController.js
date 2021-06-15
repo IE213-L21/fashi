@@ -10,6 +10,11 @@ class AccountController {
     register(req, res) {
         res.render('account/register');
     }
+
+    logout(req, res) {
+        req.session.destroy();
+        res.redirect('/')
+    }
    
 }
 

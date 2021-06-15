@@ -13,7 +13,8 @@ var userSchema = new Schema({
         password: {
             type: String
         }
-    }
+    },
+    role: String,
 });
 
 module.exports = mongoose.model('User', userSchema);
