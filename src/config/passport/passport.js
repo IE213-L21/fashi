@@ -72,7 +72,8 @@ passport.use('local.login', new LocalStrategy({
                 }
                 req.session.User = {
                     name:user.info.firstname,
-                    email:user.local.email
+                    email:user.local.email,
+                    role:user.role
                   }                
                 return done(null, user);
             })
