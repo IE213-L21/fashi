@@ -1,6 +1,7 @@
 const Product = require('../models/product')
 const League = require('../models/league')
 const Club = require('../models/club')
+const User = require('../models/user');
 const Session = require('../models/sessionID')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 const { mongooseToObject } = require('../../util/mongoose')
@@ -9,7 +10,19 @@ class ProductController {
 
     // [GET] /
     checkOut(req, res) {
-        res.render('product/check-out');
+        if(req.isAuthenticated()){
+            User.find({'info.firstname':req.session.User.name})
+                .then((user)=>{                   
+                    const username = user.map(user=>user=user.toObject())
+                    const role = username[0].role==='admin' ? 'admin' : ''
+                    res.render('product/check-out',{
+                        user: username[0].info,
+                        role
+                    })
+                })
+        }else{
+            res.render('product/check-out')
+        }
     }
 
     // [GET] /
@@ -19,39 +32,82 @@ class ProductController {
 
     // [GET] /
     async showAllProducts(req, res, next) {
-        try {
-            let session = res.locals.session;
-            session = session.toObject();
-            let totalProductsInCart = res.locals.totalProductsInCart;
-            let productsInCart = res.locals.productsInCart;
-            let totalPriceInCart = res.locals.totalPriceInCart;
-
-            const leagues = await League.find({});
-            const clubs = await Club.find({});
-
-            const numberOfProducts = await Product.countDocuments({});
-            const productsPerPage = 6;
-            const page = req.query.page || 1;
-            const begin = (page - 1) * productsPerPage;
-            const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-            const products = await Product
-                .find({ deleted: "false" })
-                .skip(begin)
-                .limit(productsPerPage);
-            res.render('product/shop', {
-                products: multipleMongooseToObject(products),
-                leagues: multipleMongooseToObject(leagues),
-                clubs: multipleMongooseToObject(clubs),
-                totalPage: totalPage,
-                page: page,
-                productsInCart: productsInCart,
-                totalProductsInCart: totalProductsInCart,
-                totalPriceInCart: totalPriceInCart,
-                session: session,
-            });
-        } catch (err) {
-            if (err)
-                next(err);
+        if(req.isAuthenticated()){
+            const user = await User.find({'info.firstname':req.session.User.name})
+            const username = user.map(user=>user=user.toObject())
+            const role = username[0].role==='admin' ? 'admin' : ''
+            try {
+                let session = res.locals.session;
+                session = session.toObject();
+                let totalProductsInCart = res.locals.totalProductsInCart;
+                let productsInCart = res.locals.productsInCart;
+                let totalPriceInCart = res.locals.totalPriceInCart;
+    
+                const leagues = await League.find({});
+                const clubs = await Club.find({});
+    
+                const numberOfProducts = await Product.countDocuments({});
+                const productsPerPage = 6;
+                const page = req.query.page || 1;
+                const begin = (page - 1) * productsPerPage;
+                const totalPage = Math.ceil(numberOfProducts / productsPerPage);
+                const products = await Product
+                    .find({ deleted: "false" })
+                    .skip(begin)
+                    .limit(productsPerPage);
+                res.render('product/shop', {
+                    products: multipleMongooseToObject(products),
+                    leagues: multipleMongooseToObject(leagues),
+                    clubs: multipleMongooseToObject(clubs),
+                    totalPage: totalPage,
+                    page: page,
+                    productsInCart: productsInCart,
+                    totalProductsInCart: totalProductsInCart,
+                    totalPriceInCart: totalPriceInCart,
+                    session: session,
+                    role: role,
+                    user: username[0].info,
+                });
+            } catch (err) {
+                if (err)
+                    next(err);
+            }
+        }
+        else{
+            try {
+                let session = res.locals.session;
+                session = session.toObject();
+                let totalProductsInCart = res.locals.totalProductsInCart;
+                let productsInCart = res.locals.productsInCart;
+                let totalPriceInCart = res.locals.totalPriceInCart;
+    
+                const leagues = await League.find({});
+                const clubs = await Club.find({});
+    
+                const numberOfProducts = await Product.countDocuments({});
+                const productsPerPage = 6;
+                const page = req.query.page || 1;
+                const begin = (page - 1) * productsPerPage;
+                const totalPage = Math.ceil(numberOfProducts / productsPerPage);
+                const products = await Product
+                    .find({ deleted: "false" })
+                    .skip(begin)
+                    .limit(productsPerPage);
+                res.render('product/shop', {
+                    products: multipleMongooseToObject(products),
+                    leagues: multipleMongooseToObject(leagues),
+                    clubs: multipleMongooseToObject(clubs),
+                    totalPage: totalPage,
+                    page: page,
+                    productsInCart: productsInCart,
+                    totalProductsInCart: totalProductsInCart,
+                    totalPriceInCart: totalPriceInCart,
+                    session: session,                   
+                });
+            } catch (err) {
+                if (err)
+                    next(err);
+            }
         }
     }
 
