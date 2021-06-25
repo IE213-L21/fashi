@@ -21,17 +21,18 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="checkout-content">
-                            <a href="#" class="content-btn">Click Here To Login</a>
+                            <a href="/account/login" class="content-btn">Click Here To Login</a>
                         </div>
                         <h4>Biiling Details</h4>
                         <div class="row">
                             <div class="col-lg-6">
+                                {{!--<label for="fir">First Name<span>*</span></label>--}}
                                 <label for="fir">First Name<span>*</span></label>
-                                <input type="text" id="fir">
+                                <input type="text" id="fir" value={{user.firstname}}>
                             </div>
                             <div class="col-lg-6">
                                 <label for="last">Last Name<span>*</span></label>
-                                <input type="text" id="last">
+                                <input type="text" id="last" value={{user.lastname}}>
                             </div>
                             <div class="col-lg-12">
                                 <label for="cun-name">Company Name</label>
@@ -56,7 +57,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label for="email">Email Address<span>*</span></label>
-                                <input type="text" id="email">
+                                <input type="text" id="email" value={{email}}>
                             </div>
                             <div class="col-lg-6">
                                 <label for="phone">Phone<span>*</span></label>
@@ -82,11 +83,10 @@
                             <div class="order-total">
                                 <ul class="order-table">
                                     <li>Product <span>Total</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                    <li class="fw-normal">Subtotal <span>$240.00</span></li>
-                                    <li class="total-price">Total <span>$240.00</span></li>
+                                    {{#each productsInCart}}
+                                      <li class="fw-normal">{{this.name}} <span>{{this.price}}.000đ</span></li>
+                                    {{/each}}
+                                    <li class="total-price">Total <span>{{this.totalPriceInCart}}.000đ</span></li>
                                 </ul>
                                 <div class="payment-check">
                                     <div class="pc-item">

@@ -1,7 +1,7 @@
-<!-- Page Preloder -->
+{{!--<!-- Page Preloder -->
 <div id="preloder">
   <div class="loader"></div>
-</div>
+</div>--}}
 
 <!-- Header Section Begin -->
 <header class="header-section">
@@ -85,7 +85,7 @@
         <div class="col-lg-3 text-right col-md-3">
           <ul class="nav-right">
             <li class="cart-icon">
-              <a href="#">
+              <a href="product/shopping-cart/{session.sessionId}">
                 <i class="icon_bag_alt"></i>
                 <span>{{totalProductsInCart}}</span>
               </a>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="select-button">
                   <a
-                    href="product/shopping-cart/{{session.sessionId}}"
+                    href="product/shopping-cart/{session.sessionId}"
                     class="primary-btn view-card"
                   >VIEW CARD</a>
                   <a

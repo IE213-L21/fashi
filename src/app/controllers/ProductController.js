@@ -8,20 +8,75 @@ const { mongooseToObject } = require('../../util/mongoose')
 
 class ProductController {
 
-    // [GET] /
-    checkOut(req, res) {
+    async checkOut(req, res) {
         if(req.isAuthenticated()){
-            User.find({'info.firstname':req.session.User.name})
-                .then((user)=>{                   
-                    const username = user.map(user=>user=user.toObject())
-                    const role = username[0].role==='admin' ? 'admin' : ''
-                    res.render('product/check-out',{
-                        user: username[0].info,
-                        role
-                    })
-                })
-        }else{
-            res.render('product/check-out')
+            const user = await User.find({'info.firstname':req.session.User.name})
+            const username = user.map(user=>user=user.toObject())
+            const role = username[0].role==='admin' ? 'admin' : ''
+            const email = username[0].local.email;
+            try {
+                const sessionID = req.signedCookies.sessionId;
+                let session = await Session.findOne({ sessionId: sessionID });
+                let totalProductsInCart = 0;
+                let productsInCart = [];
+                let totalPriceInCart = 0;
+                if (session) {
+                    totalProductsInCart = session.totalProducts;
+                    for (let [key, value] of session.cart.entries()) {
+                        let productInCart = await Product.findOne({ _id: key }).lean();
+                        let totalPriceEachProductInCart = productInCart.price * value;
+                        Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
+                        totalPriceInCart += totalPriceEachProductInCart;
+                        productsInCart.push(productInCart);
+                    }
+                }
+                else
+                    session = {};
+                res.render('product/check-out', {
+                    productsInCart: productsInCart,
+                    totalProductsInCart: totalProductsInCart,
+                    totalPriceInCart: totalPriceInCart,
+                    session: mongooseToObject(session),
+                    user: username[0].info,
+                    role,
+                    email
+                });
+            } catch(err) {
+                if (err)
+                    console.log(err);
+                next(err);
+            };
+        }
+        else {
+            try {
+                const sessionID = req.signedCookies.sessionId;
+                let session = await Session.findOne({ sessionId: sessionID });
+                let totalProductsInCart = 0;
+                let productsInCart = [];
+                let totalPriceInCart = 0;
+                if (session) {
+                    totalProductsInCart = session.totalProducts;
+                    for (let [key, value] of session.cart.entries()) {
+                        let productInCart = await Product.findOne({ _id: key }).lean();
+                        let totalPriceEachProductInCart = productInCart.price * value;
+                        Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
+                        totalPriceInCart += totalPriceEachProductInCart;
+                        productsInCart.push(productInCart);
+                    }
+                }
+                else
+                    session = {};
+                res.render('product/check-out', {
+                    productsInCart: productsInCart,
+                    totalProductsInCart: totalProductsInCart,
+                    totalPriceInCart: totalPriceInCart,
+                    session: mongooseToObject(session),
+                });
+            } catch(err) {
+                if (err)
+                    console.log(err);
+                next(err);
+            };
         }
     }
 
