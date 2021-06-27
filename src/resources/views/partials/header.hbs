@@ -19,10 +19,10 @@
       </div>
       <div class="ht-right d-flex">
         <div class="top-social">
-          <a href="#"><i class="ti-facebook"></i></a>
-          <a href="#"><i class="ti-twitter-alt"></i></a>
-          <a href="#"><i class="ti-linkedin"></i></a>
-          <a href="#"><i class="ti-pinterest"></i></a>
+          <a href="https://www.facebook.com/"><i class="ti-facebook"></i></a>
+          <a href="https://twitter.com/?lang=vi"><i class="ti-twitter-alt"></i></a>
+          <a href="https://www.linkedin.com/"><i class="ti-linkedin"></i></a>
+          <a href="https://www.pinterest.com/"><i class="ti-pinterest"></i></a>
         </div>
         {{#if user}}
           <div class="dropdown mt-2 ml-2">
@@ -166,18 +166,18 @@
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/product">Product</a></li>
-          <li><a href="#">Collection</a>
+          <li><a href="/product">Collection</a>
             <ul class="dropdown">
-              <li><a href="#">Men's</a></li>
-              <li><a href="#">Women's</a></li>
-              <li><a href="#">Kid's</a></li>
+              <li><a href="/product">Men's</a></li>
+              <li><a href="/product">Women's</a></li>
+              <li><a href="/product">Kid's</a></li>
             </ul>
           </li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="#">Pages</a>
             <ul class="dropdown">
               <li><a href="blogs/blog-details">Blog Details</a></li>
-              <li><a href="product/shopping-cart">Shopping Cart</a></li>
+              <li><a href="product/shopping-cart/{session.sessionId}">Shopping Cart</a></li>
               <li><a href="product/check-out">Checkout</a></li>
               <li><a href="blogs/faq">Faq</a></li>
               <li><a href="account/register">Register</a></li>
