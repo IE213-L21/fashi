@@ -57,11 +57,17 @@
                     <div class="row">
                         <div class="col-lg-7 col-md-7">
                             <div class="select-option">
-                                <select class="sorting">
-                                    <option value="default">Default Sorting</option>
-                                    <option value="asc">Ascending</option>
-                                    <option value="desc">Descending</option>
-                                </select>
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sắp Xếp
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="/product{{link}}">Mặc định</a>
+                                        <a class="dropdown-item" href="/product{{link}}?_sort&column=price&type=asc">Tăng</a>
+                                        <a class="dropdown-item" href="/product{{link}}?_sort&column=price&type=desc">Giảm</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
