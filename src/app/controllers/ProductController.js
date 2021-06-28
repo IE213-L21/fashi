@@ -145,8 +145,6 @@ class ProductController {
                 const begin = (page - 1) * productsPerPage;
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
                 if(req.query.hasOwnProperty('_sort')){
-                    console.log(req.query.column)
-                    console.log(req.query.type);
                     var products = await Product
                     .find({ deleted: "false" })
                     .sort({'price': req.query.type == 'asc' ? 1 : -1})
@@ -158,8 +156,6 @@ class ProductController {
                         .skip(begin)
                         .limit(productsPerPage);
                 }
-
-
                 res.render('product/shop', {
                     products: multipleMongooseToObject(products),
                     leagues: multipleMongooseToObject(leagues),
@@ -275,21 +271,35 @@ class ProductController {
         const clubs = await Club.find({});
         const leagues = await League.find({});
         const leagueNeededRender = await League.findOne({ slug: req.params.league });
+        console.log(req.params.league);
         const numberOfProducts = await Product.countDocuments({ league: leagueNeededRender.name });
         const productsPerPage = 6;
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-        const products = await Product
-            .find({ league: leagueNeededRender.name })
-            .skip(begin)
-            .limit(productsPerPage);
+        // const products = await Product
+        //     .find({ league: leagueNeededRender.name })
+        //     .skip(begin)
+        //     .limit(productsPerPage);
+            if(req.query.hasOwnProperty('_sort')){
+                var products = await Product
+                .find({ deleted: "false",league: leagueNeededRender.name })
+                .sort({'price': req.query.type == 'asc' ? 1 : -1})
+                .skip(begin)
+                .limit(productsPerPage);
+            }else{
+                var products = await Product
+                    .find({ deleted: "false",league: leagueNeededRender.name })
+                    .skip(begin)
+                    .limit(productsPerPage);
+            }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
+            link:`/leagues/${req.params.league}`
         })
     }
 
@@ -303,16 +313,30 @@ class ProductController {
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-        const products = await Product
-            .find({ club: clubFound.name })
-            .skip(begin)
-            .limit(productsPerPage);
+        // const products = await Product
+        //     .find({ club: clubFound.name })
+        //     .skip(begin)
+        //     .limit(productsPerPage);
+        
+            if(req.query.hasOwnProperty('_sort')){
+                var products = await Product
+                .find({ deleted: "false",club: clubFound.name })
+                .sort({'price': req.query.type == 'asc' ? 1 : -1})
+                .skip(begin)
+                .limit(productsPerPage);
+            }else{
+                var products = await Product
+                    .find({ deleted: "false",club: clubFound.name })
+                    .skip(begin)
+                    .limit(productsPerPage);
+            }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
+            link:`/clubs/${req.params.club}`
         })
     }
 
