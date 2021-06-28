@@ -27,4 +27,11 @@ module.exports = {
       </a>`;
       return new Handlebars.SafeString(output);
     },
+
+    disableSize: numberOfProductInSize => {
+        let status = "";
+        if (numberOfProductInSize == 0)
+            status = 'disabled';
+        return status;
+    }
 }

@@ -47,7 +47,7 @@
                                     <p>{{product.description}}</p>
                                     <h4>{{product.price}}.000đ</h4>
                                 </div>
-                                <div class="pd-size-choose">
+                                {{!-- <div class="pd-size-choose">
                                     <div class="sc-item">
                                         <input type="radio" id="sm-size">
                                         <label for="sm-size">S</label>
@@ -60,12 +60,12 @@
                                         <input type="radio" id="lg-size">
                                         <label for="lg-size">L</label>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="quantity">
                                     <div class="pro-qty">
                                         <input type="text" value="1">
                                     </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                                    <a href="/product/add-to-cart/{{product._id}}" class="primary-btn pd-cart">Add To Cart</a>
                                 </div>
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: {{product.category}}</li>

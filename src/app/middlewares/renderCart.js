@@ -16,6 +16,7 @@ async function renderCart(req, res, next) {
             totalPriceInCart += totalPriceEachProductInCart;
             productsInCart.push(productInCart)
         }
+        session = session.toObject();
     }
     else
         session = [];

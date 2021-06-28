@@ -92,12 +92,6 @@ class ProductController {
             const username = user.map(user=>user=user.toObject())
             const role = username[0].role==='admin' ? 'admin' : ''
             try {
-                let session = res.locals.session;
-                session = session.toObject();
-                let totalProductsInCart = res.locals.totalProductsInCart;
-                let productsInCart = res.locals.productsInCart;
-                let totalPriceInCart = res.locals.totalPriceInCart;
-    
                 const leagues = await League.find({});
                 const clubs = await Club.find({});
     
@@ -116,10 +110,6 @@ class ProductController {
                     clubs: multipleMongooseToObject(clubs),
                     totalPage: totalPage,
                     page: page,
-                    productsInCart: productsInCart,
-                    totalProductsInCart: totalProductsInCart,
-                    totalPriceInCart: totalPriceInCart,
-                    session: session,
                     role: role,
                     user: username[0].info,
                 });
@@ -130,12 +120,6 @@ class ProductController {
         }
         else{
             try {
-                let session = res.locals.session;
-                session = session.toObject();
-                let totalProductsInCart = res.locals.totalProductsInCart;
-                let productsInCart = res.locals.productsInCart;
-                let totalPriceInCart = res.locals.totalPriceInCart;
-    
                 const leagues = await League.find({});
                 const clubs = await Club.find({});
     
@@ -153,11 +137,7 @@ class ProductController {
                     leagues: multipleMongooseToObject(leagues),
                     clubs: multipleMongooseToObject(clubs),
                     totalPage: totalPage,
-                    page: page,
-                    productsInCart: productsInCart,
-                    totalProductsInCart: totalProductsInCart,
-                    totalPriceInCart: totalPriceInCart,
-                    session: session,                   
+                    page: page,              
                 });
             } catch (err) {
                 if (err)
@@ -218,27 +198,10 @@ class ProductController {
     async shoppingCart(req, res) {
         try {
             const sessionID = req.signedCookies.sessionId;
-            let session = await Session.findOne({ sessionId: sessionID });
-            let totalProductsInCart = 0;
-            let productsInCart = [];
-            let totalPriceInCart = 0;
-            if (session) {
-                totalProductsInCart = session.totalProducts;
-                for (let [key, value] of session.cart.entries()) {
-                    let productInCart = await Product.findOne({ _id: key }).lean();
-                    let totalPriceEachProductInCart = productInCart.price * value;
-                    Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
-                    totalPriceInCart += totalPriceEachProductInCart;
-                    productsInCart.push(productInCart);
-                }
-            }
-            else
-                session = {};
             res.render('product/shopping-cart', {
-                productsInCart: productsInCart,
-                totalProductsInCart: totalProductsInCart,
-                totalPriceInCart: totalPriceInCart,
-                session: mongooseToObject(session),
+                productsInCart: res.locals.productsInCart,
+                totalPriceInCart: res.locals.totalPriceInCart,
+                session: res.locals.session
             });
         } catch(err) {
             if (err)
@@ -338,6 +301,54 @@ class ProductController {
                 })
             })
             .catch(next);
+    }
+
+    // [POST]
+    async updateCartInCartDetail(req, res, next) {
+        let input = req.body;
+        let productId = req.params.productId;
+        let error;
+
+        // validation input
+        let product = await Product.findOne({ _id: productId });
+        if (input.currentSize == 'S' && product.quantityOfSizeS < input.numberOfProduct){
+            error = 'Number of product is over in stock'
+            input.numberOfProduct = product.quantityOfSizeS;
+        }
+        if (input.currentSize == 'M' && product.quantityOfSizeM < input.numberOfProduct){
+            error = 'Number of product is over in stock'
+            input.numberOfProduct = product.quantityOfSizeM;
+        }
+        if (input.currentSize == 'L' && product.quantityOfSizeL < input.numberOfProduct){
+            error = 'Number of product is over in stock'
+            input.numberOfProduct = product.quantityOfSizeL;
+        }
+
+        let sessionId = req.signedCookies.sessionId;
+        let session = await  Session.findOne({ sessionId: sessionId });
+        let numberOfProductBeforeUpdate = session.cart.get(productId);
+        session.cart.set(productId, input.numberOfProduct);
+        session.totalProducts += parseInt(input.numberOfProduct) - parseInt(numberOfProductBeforeUpdate);
+
+        // set total price in cart
+        let totalPriceInCart = 0;
+        for (let [key, value] of session.cart.entries()) {
+            let productInCart = await Product.findOne({ _id: key })
+            let totalPriceEachProductInCart = productInCart.price * value;
+            totalPriceInCart += totalPriceEachProductInCart;
+        };
+
+        // set price of this product
+        let priceOfProduct = product.price * parseInt(input.numberOfProduct);
+
+        await session.save();
+        return res.json({
+            session,
+            totalPriceInCart,
+            priceOfProduct,
+            error,
+            numberOfProduct: input.numberOfProduct,
+        });
     }
 }
 

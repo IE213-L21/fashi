@@ -40,10 +40,10 @@
                                     <h5><a href="/product/{{this.slug}}">{{this.name}}</a></h5>
                                 </td>
                                 <td style="padding-top: 30px;">
-                                    <select class="form-control">
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
+                                    <select class="form-control" id="select-size">
+                                        <option value="S" {{{disableSize this.quantityOfSizeS}}}>S</option>
+                                        <option value="M" {{{disableSize this.quantityOfSizeM}}}>M</option>
+                                        <option value="L" {{{disableSize this.quantityOfSizeL}}}>L</option>
                                     </select>
                                 </td>
                                 <td class="p-price first-row price-each-product-in-cart">{{this.price}}.000đ</td>
@@ -65,20 +65,13 @@
                         <div class="cart-buttons">
                             <a href="/product" class="primary-btn up-cart">Continue shopping</a>
                         </div>
-                        <div class="discount-coupon">
-                            <h6>Discount Codes</h6>
-                            <form action="#" class="coupon-form">
-                                <input type="text" placeholder="Enter your codes">
-                                <button type="submit" class="site-btn coupon-btn">Apply</button>
-                            </form>
-                        </div>
                     </div>
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="cart-total">Total <span>{{this.totalPriceInCart}}.000đ</span></li>
+                                <li class="cart-total">Total <span>{{totalPriceInCart}}.000đ</span></li>
                             </ul>
-                            <a href="/product/check-out" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                            <a href="/product/check-out/{{session.sessionId}}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                         </div>
                     </div>
                 </div>
@@ -87,16 +80,5 @@
     </div>
 </section>
 <!-- Shopping Cart Section End -->
-
-<form>
-    <div class="form-group">
-        <label for="size">Size</label>
-        <input type="text" class="form-control" id="size" name="size">
-    </div>
-    <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input type="text" class="form-control" id="quantity" name="quantity">
-    </div>
-</form>
 
 <script src="js/cart-page.js"></script>
