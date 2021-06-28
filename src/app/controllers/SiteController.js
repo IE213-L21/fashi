@@ -1,10 +1,13 @@
 const User = require('../models/user');
 const session = require('express-session');
+const Product = require('../models/product');
+const { mongooseToObject}=require('../../util/mongoose')
+const {multipleMongooseToObject}= require('../../util/mongoose')
 
 class SiteController {
 
     // [GET] /
-    index(req, res) {
+    async index(req, res) {
         if(req.isAuthenticated()){
             User.find({'info.firstname':req.session.User.name})
                 .then((user)=>{                   
@@ -16,7 +19,12 @@ class SiteController {
                     })
                 })
         }else{
-            res.render('index')
+            const productLaLiga = await Product.find({league:"La Liga"})
+            const productPremierLeague = await Product.find({league:"Premier League"})
+            res.render('index',{
+                laLiga:multipleMongooseToObject(productLaLiga),
+                permierLeague:multipleMongooseToObject(productPremierLeague)
+            })
         }
     }
 
