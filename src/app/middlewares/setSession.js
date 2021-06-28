@@ -11,6 +11,7 @@ function setSession(req, res, next) {
         const newSessionID = new SessionID({
             sessionId: id,
             cart: { },
+            size: { },
             totalProducts: 0,
         })
         newSessionID.save( (err) => {

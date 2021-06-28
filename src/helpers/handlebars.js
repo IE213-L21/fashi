@@ -33,5 +33,13 @@ module.exports = {
         if (numberOfProductInSize == 0)
             status = 'disabled';
         return status;
+    },
+
+    initSize: (productId, session, currentValue) => {
+        let status = "";
+        productId = productId.toString();
+        if (session.size.get(productId) == currentValue) 
+            status = 'selected';
+        return status;
     }
 }

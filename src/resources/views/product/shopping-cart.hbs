@@ -41,9 +41,9 @@
                                 </td>
                                 <td style="padding-top: 30px;">
                                     <select class="form-control" id="select-size">
-                                        <option value="S" {{{disableSize this.quantityOfSizeS}}}>S</option>
-                                        <option value="M" {{{disableSize this.quantityOfSizeM}}}>M</option>
-                                        <option value="L" {{{disableSize this.quantityOfSizeL}}}>L</option>
+                                        <option value="S" {{{initSize this._id ../session 'S'}}} {{{disableSize this.quantityOfSizeS}}}>S</option>
+                                        <option value="M" {{{initSize this._id ../session 'M'}}} {{{disableSize this.quantityOfSizeM}}}>M</option>
+                                        <option value="L" {{{initSize this._id ../session 'L'}}} {{{disableSize this.quantityOfSizeL}}}>L</option>
                                     </select>
                                 </td>
                                 <td class="p-price first-row price-each-product-in-cart">{{this.price}}.000đ</td>

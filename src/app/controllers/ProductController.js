@@ -205,7 +205,6 @@ class ProductController {
     // [GET] /
     async shoppingCart(req, res) {
         try {
-            const sessionID = req.signedCookies.sessionId;
             res.render('product/shopping-cart', {
                 productsInCart: res.locals.productsInCart,
                 totalPriceInCart: res.locals.totalPriceInCart,
@@ -311,6 +310,7 @@ class ProductController {
             .then((session) => {
                 let count = session.cart.get(productID) || 0;
                 session.cart.set(productID, count + 1);
+                session.size.set(productID, 'S');
                 session.totalProducts++;
                 session.save((err) => {
                     if (err)
@@ -329,6 +329,7 @@ class ProductController {
             .then((session) => {
                 let count = session.cart.get(productID);
                 session.cart.delete(productID);
+                session.size.delete(productID);
                 session.totalProducts -= count;
                 session.save((err) => {
                     if (err)
@@ -364,6 +365,7 @@ class ProductController {
         let session = await  Session.findOne({ sessionId: sessionId });
         let numberOfProductBeforeUpdate = session.cart.get(productId);
         session.cart.set(productId, input.numberOfProduct);
+        session.size.set(productId, input.currentSize);
         session.totalProducts += parseInt(input.numberOfProduct) - parseInt(numberOfProductBeforeUpdate);
 
         // set total price in cart
