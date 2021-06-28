@@ -144,10 +144,22 @@ class ProductController {
                 const page = req.query.page || 1;
                 const begin = (page - 1) * productsPerPage;
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-                const products = await Product
+                if(req.query.hasOwnProperty('_sort')){
+                    console.log(req.query.column)
+                    console.log(req.query.type);
+                    var products = await Product
                     .find({ deleted: "false" })
+                    .sort({'price': req.query.type == 'asc' ? 1 : -1})
                     .skip(begin)
                     .limit(productsPerPage);
+                }else{
+                    var products = await Product
+                        .find({ deleted: "false" })
+                        .skip(begin)
+                        .limit(productsPerPage);
+                }
+
+
                 res.render('product/shop', {
                     products: multipleMongooseToObject(products),
                     leagues: multipleMongooseToObject(leagues),

@@ -29,7 +29,7 @@ app.use(express.urlencoded({
 app.use(express.json()); // parse application/json
 app.use(cookieParser('arsenalrobertpires'));
 app.use(setSession);
-// app.use(renderCart);
+app.use(renderCart);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 
