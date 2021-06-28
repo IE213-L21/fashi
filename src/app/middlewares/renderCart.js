@@ -14,7 +14,7 @@ async function renderCart(req, res, next) {
             let totalPriceEachProductInCart = productInCart.price * value;
             Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
             totalPriceInCart += totalPriceEachProductInCart;
-            productsInCart.push(productInCart);
+            productsInCart.push(productInCart)
         }
     }
     else
