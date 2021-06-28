@@ -14,7 +14,7 @@ router.post('/login',passport.authenticate('local.login', {
     failureFlash: true }))
 router.get('/register',accountController.register)
 router.post('/register',passport.authenticate('local.register', { 
-    successRedirect: '/',
+    successRedirect: '/account/login',
     failureRedirect: '/account/register',
     failureFlash: true }))
 router.get('/logout',accountController.logout)

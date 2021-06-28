@@ -12,6 +12,9 @@ function route(app) {
     app.use('/product', productRouter);
     app.use('/admin', adminAuthentication, adminRouter);
     app.use('/', siteRouter);
+    app.use('/*',function(req,res){
+        res.render('404')
+    })
 }
 
 module.exports = route;
