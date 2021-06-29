@@ -38,6 +38,8 @@ passport.use('local.register', new LocalStrategy({
       var newUser = new User();
       newUser.info.firstname = req.body.firstname
       newUser.info.lastname = req.body.lastname
+      newUser.info.phonenumber = req.body.phonenumber
+      newUser.info.address = req.body.address
       newUser.local.email = email
       newUser.role='user'
       bcrypt.hash( password, saltRounds, function(err, hash) {

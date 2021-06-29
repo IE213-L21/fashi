@@ -5,6 +5,8 @@ var userSchema = new Schema({
     info: {
         firstname: String,
         lastname: String,
+        phonenumber: String,
+        address: String
     },
     local: {
         email: {
