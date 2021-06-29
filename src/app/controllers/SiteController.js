@@ -9,15 +9,17 @@ class SiteController {
     // [GET] /
     async index(req, res) {
         if(req.isAuthenticated()){
-            User.find({'info.firstname':req.session.User.name})
-                .then((user)=>{                   
-                    const username = user.map(user=>user=user.toObject())
+            const productLaLiga = await Product.find({league:"La Liga"})
+            const productPremierLeague = await Product.find({league:"Premier League"})
+            const user = await User.find({'info.firstname':req.session.User.name})
+            const username = user.map(user=>user=user.toObject())
                     const role = username[0].role==='admin' ? 'admin' : ''
-                    res.render('index',{
-                        user: username[0].info,
-                        role
-                    })
-                })
+            res.render('index',{
+                laLiga:multipleMongooseToObject(productLaLiga),
+                permierLeague:multipleMongooseToObject(productPremierLeague),
+                user: username[0].info,
+                role
+            })
         }else{
             const productLaLiga = await Product.find({league:"La Liga"})
             const productPremierLeague = await Product.find({league:"Premier League"})
