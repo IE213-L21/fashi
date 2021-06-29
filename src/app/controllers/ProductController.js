@@ -2,7 +2,8 @@ const Product = require('../models/product')
 const League = require('../models/league')
 const Club = require('../models/club')
 const User = require('../models/user');
-const Session = require('../models/sessionID')
+const Session = require('../models/sessionID');
+const Checkout = require('../models/checkout');
 const { multipleMongooseToObject } = require('../../util/mongoose')
 const { mongooseToObject } = require('../../util/mongoose')
 
@@ -15,28 +16,11 @@ class ProductController {
             const role = username[0].role === 'admin' ? 'admin' : ''
             const email = username[0].local.email;
             try {
-                const sessionID = req.signedCookies.sessionId;
-                let session = await Session.findOne({ sessionId: sessionID });
-                let totalProductsInCart = 0;
-                let productsInCart = [];
-                let totalPriceInCart = 0;
-                if (session) {
-                    totalProductsInCart = session.totalProducts;
-                    for (let [key, value] of session.cart.entries()) {
-                        let productInCart = await Product.findOne({ _id: key }).lean();
-                        let totalPriceEachProductInCart = productInCart.price * value;
-                        Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
-                        totalPriceInCart += totalPriceEachProductInCart;
-                        productsInCart.push(productInCart);
-                    }
-                }
-                else
-                    session = {};
                 res.render('product/check-out', {
-                    productsInCart: productsInCart,
-                    totalProductsInCart: totalProductsInCart,
-                    totalPriceInCart: totalPriceInCart,
-                    session: mongooseToObject(session),
+                    productsInCart: res.locals.productsInCart,
+                    totalProductsInCart: res.locals.totalProductsInCart,
+                    totalPriceInCart: res.locals.totalPriceInCart,
+                    session: res.locals.session,
                     user: username[0].info,
                     role,
                     email
@@ -49,28 +33,11 @@ class ProductController {
         }
         else {
             try {
-                const sessionID = req.signedCookies.sessionId;
-                let session = await Session.findOne({ sessionId: sessionID });
-                let totalProductsInCart = 0;
-                let productsInCart = [];
-                let totalPriceInCart = 0;
-                if (session) {
-                    totalProductsInCart = session.totalProducts;
-                    for (let [key, value] of session.cart.entries()) {
-                        let productInCart = await Product.findOne({ _id: key }).lean();
-                        let totalPriceEachProductInCart = productInCart.price * value;
-                        Object.assign(productInCart, { quantityInCart: value }, { totalPrice: totalPriceEachProductInCart });
-                        totalPriceInCart += totalPriceEachProductInCart;
-                        productsInCart.push(productInCart);
-                    }
-                }
-                else
-                    session = {};
                 res.render('product/check-out', {
-                    productsInCart: productsInCart,
-                    totalProductsInCart: totalProductsInCart,
-                    totalPriceInCart: totalPriceInCart,
-                    session: mongooseToObject(session),
+                    productsInCart: res.locals.productsInCart,
+                    totalProductsInCart: res.locals.totalProductsInCart,
+                    totalPriceInCart: res.locals.totalPriceInCart,
+                    session: res.locals.session,
                 });
             } catch (err) {
                 if (err)
@@ -392,7 +359,6 @@ class ProductController {
         let numberOfProductBeforeUpdate = session.cart.get(productId);
         session.cart.set(productId, input.numberOfProduct);
         session.size.set(productId, input.currentSize);
-        console.log(input.currentSize);
         session.totalProducts += parseInt(input.numberOfProduct) - parseInt(numberOfProductBeforeUpdate);
 
         // set total price in cart
@@ -414,6 +380,29 @@ class ProductController {
             error,
             numberOfProduct: input.numberOfProduct,
         });
+    }
+
+    async confirmCheckout(req, res) {
+        let input = req.body;
+        input.cart = {};
+        input.size = {};
+        let session = res.locals.session;
+        for (let [key, value] of session.cart.entries()) {
+            Object.assign(input.cart, {
+                [key]: value
+            })         
+        };
+        for (let [key, value] of session.size.entries()) {
+            Object.assign(input.size, {
+                [key]: value
+            })           
+        };
+        input.payment = res.locals.totalPriceInCart;
+        const newCheckout = new Checkout({
+            ...input
+        });
+        await newCheckout.save();
+        res.json(input);
     }
 }
 

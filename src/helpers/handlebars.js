@@ -43,11 +43,17 @@ module.exports = {
         return status;
     },
 
-    checkOutStock: (quantityOfSizeS, quantityOfSizeM, quantityOfSizeL) => {
+    /* checkOutStock: (quantityOfSizeS, quantityOfSizeM, quantityOfSizeL) => {
         let status = "";
         if (quantityOfSizeS == 0 && quantityOfSizeM == 0 && quantityOfSizeL == 0) {
             status = ""
         }
         return status;
-    }
+    } */
+
+    priceOfProduct: (productId, session, unitPrice) => {
+        productId = productId.toString();
+        let quantity = session.cart.get(productId);
+        return quantity * unitPrice;
+    },
 }

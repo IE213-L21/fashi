@@ -1,151 +1,86 @@
- <!-- Breadcrumb Section Begin -->
-    <div class="breacrumb-section">
-        <div class="container">
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <a href="./shop.html">Shop</a>
+                    <span>Check Out</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="checkout-section spad">
+    <div class="container">
+        <form action="/product/check-out/confirm" method="post" class="checkout-form">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-text product-more">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./shop.html">Shop</a>
-                        <span>Check Out</span>
+                <div class="col-lg-6">
+                    <div class="checkout-content">
+                        <a href="/account/login" class="content-btn">Click Here To Login</a>
+                    </div>
+                    <h4>Biiling Details</h4>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="firstname">Firstname</label>
+                                <input type="text" class="firstname" id="firstname" name="firstname" value={{user.firstname}}>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Lastname</label>
+                                <input type="text" class="lastname" id="lastname" name="lastname" value={{user.lastname}}>
+                            </div>
+                            <div class="form-group">
+                                <label for="adrress">Address</label>
+                                <input type="text" class="address" id="address" name="address" value={{user.address}}>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="email" id="email" name="email" value={{user.email}}>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="phone" id="phone" name="phone" value={{user.phone}}>
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentMethod">Payment method</label>
+                                <select class="form-control" id="paymentMethod" name="paymentMethod">
+                                    <option value="COD">COD</option>
+                                    <option value="Banking">Banking</option>
+                                    <option value="Momo">Momo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="checkout-content">
+                        <input type="text" placeholder="Enter Your Coupon Code">
+                    </div>
+                    <div class="place-order">
+                        <h4>Your Order</h4>
+                        <div class="order-total">
+                            <ul class="order-table">
+                                <li>Product <span>Total</span></li>
+                                {{#each productsInCart}}
+                                <li class="fw-normal">{{this.name}} <span>{{{priceOfProduct this._id ../session
+                                        this.price}}}.000đ</span></li>
+                                {{/each}}
+                                <li class="total-price">Total <span>{{this.totalPriceInCart}}.000đ</span></li>
+                            </ul>
+
+                            <div class="order-btn">
+                                <button type="submit" class="site-btn place-btn">Place Order</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
-    <!-- Breadcrumb Section Begin -->
-
-    <!-- Shopping Cart Section Begin -->
-    <section class="checkout-section spad">
-        <div class="container">
-            <form action="#" class="checkout-form">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="checkout-content">
-                            <a href="/account/login" class="content-btn">Click Here To Login</a>
-                        </div>
-                        <h4>Biiling Details</h4>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                {{!--<label for="fir">First Name<span>*</span></label>--}}
-                                <label for="fir">First Name<span>*</span></label>
-                                <input type="text" id="fir" value={{user.firstname}}>
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="last">Last Name<span>*</span></label>
-                                <input type="text" id="last" value={{user.lastname}}>
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun-name">Company Name</label>
-                                <input type="text" id="cun-name">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="cun">Country<span>*</span></label>
-                                <input type="text" id="cun">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="street">Street Address<span>*</span></label>
-                                <input type="text" id="street" class="street-first">
-                                <input type="text">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="zip">Postcode / ZIP (optional)</label>
-                                <input type="text" id="zip">
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="town">Town / City<span>*</span></label>
-                                <input type="text" id="town">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="email">Email Address<span>*</span></label>
-                                <input type="text" id="email" value={{email}}>
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="phone">Phone<span>*</span></label>
-                                <input type="text" id="phone">
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="create-item">
-                                    <label for="acc-create">
-                                        <a href="/account/register">Create an account?</a>
-                                        <input type="checkbox" id="acc-create">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="checkout-content">
-                            <input type="text" placeholder="Enter Your Coupon Code">
-                        </div>
-                        <div class="place-order">
-                            <h4>Your Order</h4>
-                            <div class="order-total">
-                                <ul class="order-table">
-                                    <li>Product <span>Total</span></li>
-                                    {{#each productsInCart}}
-                                      <li class="fw-normal">{{this.name}} <span>{{this.price}}.000đ</span></li>
-                                    {{/each}}
-                                    <li class="total-price">Total <span>{{this.totalPriceInCart}}.000đ</span></li>
-                                </ul>
-                                <div class="payment-check">
-                                    <div class="pc-item">
-                                        <label for="pc-check">
-                                            Cheque Payment
-                                            <input type="checkbox" id="pc-check">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="pc-item">
-                                        <label for="pc-paypal">
-                                            Paypal
-                                            <input type="checkbox" id="pc-paypal">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="order-btn">
-                                    <button type="submit" class="site-btn place-btn">Place Order</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
-    <!-- Shopping Cart Section End -->
-
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
+</section>
+<!-- Shopping Cart Section End -->
