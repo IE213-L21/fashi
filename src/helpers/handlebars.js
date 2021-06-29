@@ -41,5 +41,13 @@ module.exports = {
         if (session.size.get(productId) == currentValue) 
             status = 'selected';
         return status;
+    },
+
+    checkOutStock: (quantityOfSizeS, quantityOfSizeM, quantityOfSizeL) => {
+        let status = "";
+        if (quantityOfSizeS == 0 && quantityOfSizeM == 0 && quantityOfSizeL == 0) {
+            status = ""
+        }
+        return status;
     }
 }

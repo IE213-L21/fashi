@@ -28,7 +28,7 @@ $(document).ready(function(){
         });
     })
 
-    $('#select-size').change(function() {
+    $('.select-size').change(function() {
         // call ajax to update cart in session
         let productId = $(this).parent().next().next().next().next('.close-td').find('a').attr('href').split('/')[3];
         let totalPriceOfProduct = $(this).parent().next().next().next();

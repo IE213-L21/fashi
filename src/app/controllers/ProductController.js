@@ -9,10 +9,10 @@ const { mongooseToObject } = require('../../util/mongoose')
 class ProductController {
 
     async checkOut(req, res) {
-        if(req.isAuthenticated()){
-            const user = await User.find({'info.firstname':req.session.User.name})
-            const username = user.map(user=>user=user.toObject())
-            const role = username[0].role==='admin' ? 'admin' : ''
+        if (req.isAuthenticated()) {
+            const user = await User.find({ 'info.firstname': req.session.User.name })
+            const username = user.map(user => user = user.toObject())
+            const role = username[0].role === 'admin' ? 'admin' : ''
             const email = username[0].local.email;
             try {
                 const sessionID = req.signedCookies.sessionId;
@@ -41,7 +41,7 @@ class ProductController {
                     role,
                     email
                 });
-            } catch(err) {
+            } catch (err) {
                 if (err)
                     console.log(err);
                 next(err);
@@ -72,7 +72,7 @@ class ProductController {
                     totalPriceInCart: totalPriceInCart,
                     session: mongooseToObject(session),
                 });
-            } catch(err) {
+            } catch (err) {
                 if (err)
                     console.log(err);
                 next(err);
@@ -87,21 +87,21 @@ class ProductController {
 
     // [GET] /
     async showAllProducts(req, res, next) {
-        if(req.isAuthenticated()){
-            const user = await User.find({'info.firstname':req.session.User.name})
-            const username = user.map(user=>user=user.toObject())
-            const role = username[0].role==='admin' ? 'admin' : ''
+        if (req.isAuthenticated()) {
+            const user = await User.find({ 'info.firstname': req.session.User.name })
+            const username = user.map(user => user = user.toObject())
+            const role = username[0].role === 'admin' ? 'admin' : ''
             try {
                 const leagues = await League.find({});
                 const clubs = await Club.find({});
-    
+
                 const numberOfProducts = await Product.countDocuments({});
                 const productsPerPage = 6;
                 const page = req.query.page || 1;
                 const begin = (page - 1) * productsPerPage;
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
                 const products = await Product
-                    .find({ deleted: "false" })
+                    .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
                     .skip(begin)
                     .limit(productsPerPage);
                 res.render('product/shop', {
@@ -118,25 +118,25 @@ class ProductController {
                     next(err);
             }
         }
-        else{
+        else {
             try {
                 const leagues = await League.find({});
                 const clubs = await Club.find({});
-    
+
                 const numberOfProducts = await Product.countDocuments({});
                 const productsPerPage = 6;
                 const page = req.query.page || 1;
                 const begin = (page - 1) * productsPerPage;
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-                if(req.query.hasOwnProperty('_sort')){
+                if (req.query.hasOwnProperty('_sort')) {
                     var products = await Product
-                    .find({ deleted: "false" })
-                    .sort({'price': req.query.type == 'asc' ? 1 : -1})
-                    .skip(begin)
-                    .limit(productsPerPage);
-                }else{
+                        .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                        .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
+                        .skip(begin)
+                        .limit(productsPerPage);
+                } else {
                     var products = await Product
-                        .find({ deleted: "false" })
+                        .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
                         .skip(begin)
                         .limit(productsPerPage);
                 }
@@ -145,7 +145,7 @@ class ProductController {
                     leagues: multipleMongooseToObject(leagues),
                     clubs: multipleMongooseToObject(clubs),
                     totalPage: totalPage,
-                    page: page,              
+                    page: page,
                 });
             } catch (err) {
                 if (err)
@@ -156,7 +156,7 @@ class ProductController {
 
     search(req, res, next) {
         const keyword = req.query.name;
-        Promise.all([Product.find({ deleted: "false" }), League.find({}), Club.find({})])
+        Promise.all([Product.find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } }), League.find({}), Club.find({})])
             .then(([products, leagues, clubs]) => {
                 products = products.filter((product) => {
                     return product.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
@@ -210,7 +210,7 @@ class ProductController {
                 totalPriceInCart: res.locals.totalPriceInCart,
                 session: res.locals.session
             });
-        } catch(err) {
+        } catch (err) {
             if (err)
                 console.log(err);
             next(err);
@@ -233,7 +233,6 @@ class ProductController {
         const clubs = await Club.find({});
         const leagues = await League.find({});
         const leagueNeededRender = await League.findOne({ slug: req.params.league });
-        console.log(req.params.league);
         const numberOfProducts = await Product.countDocuments({ league: leagueNeededRender.name });
         const productsPerPage = 6;
         const page = req.query.page || 1;
@@ -243,25 +242,25 @@ class ProductController {
         //     .find({ league: leagueNeededRender.name })
         //     .skip(begin)
         //     .limit(productsPerPage);
-            if(req.query.hasOwnProperty('_sort')){
-                var products = await Product
-                .find({ deleted: "false",league: leagueNeededRender.name })
-                .sort({'price': req.query.type == 'asc' ? 1 : -1})
+        if (req.query.hasOwnProperty('_sort')) {
+            var products = await Product
+                .find({ deleted: "false", league: leagueNeededRender.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
-            }else{
-                var products = await Product
-                    .find({ deleted: "false",league: leagueNeededRender.name })
-                    .skip(begin)
-                    .limit(productsPerPage);
-            }
+        } else {
+            var products = await Product
+                .find({ deleted: "false", league: leagueNeededRender.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                .skip(begin)
+                .limit(productsPerPage);
+        }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
-            link:`/leagues/${req.params.league}`
+            link: `/leagues/${req.params.league}`
         })
     }
 
@@ -279,43 +278,67 @@ class ProductController {
         //     .find({ club: clubFound.name })
         //     .skip(begin)
         //     .limit(productsPerPage);
-        
-            if(req.query.hasOwnProperty('_sort')){
-                var products = await Product
-                .find({ deleted: "false",club: clubFound.name })
-                .sort({'price': req.query.type == 'asc' ? 1 : -1})
+
+        if (req.query.hasOwnProperty('_sort')) {
+            var products = await Product
+                .find({ deleted: "false", club: clubFound.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
-            }else{
-                var products = await Product
-                    .find({ deleted: "false",club: clubFound.name })
-                    .skip(begin)
-                    .limit(productsPerPage);
-            }
+        } else {
+            var products = await Product
+                .find({ deleted: "false", club: clubFound.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                .skip(begin)
+                .limit(productsPerPage);
+        }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
-            link:`/clubs/${req.params.club}`
+            link: `/clubs/${req.params.club}`
         })
     }
 
     // [GET] /product/add-to-cart/:id
     addProductToCart(req, res, next) {
+        // check if number of product is provided
+        let numberOfProduct;
+        if (req.body.numberOfProduct) {
+            numberOfProduct = req.body.numberOfProduct;
+        }
+        else {
+            numberOfProduct = 1;
+        }
+
         let productID = req.params.id;
         let sessionID = req.signedCookies.sessionId;
         Session.findOne({ sessionId: sessionID })
             .then((session) => {
                 let count = session.cart.get(productID) || 0;
-                session.cart.set(productID, count + 1);
-                session.size.set(productID, 'S');
-                session.totalProducts++;
-                session.save((err) => {
-                    if (err)
-                        console.log(err);
-                    res.redirect('back');
+                Product.findOne({ _id: productID }).then(product => {
+                    if (product.quantityOfSizeS > 0) {
+                        session.size.set(productID, 'S');
+                    }
+                    else if (product.quantityOfSizeS == 0) {
+                        session.size.set(productID, 'M');
+                    }
+                    else if (product.quantityOfSizeM == 0) {
+                        session.size.set(productID, 'L');
+                    }
+                    
+                    session.cart.set(productID, count + numberOfProduct);
+                    session.totalProducts += numberOfProduct;
+                    session.save((err) => {
+                        if (err)
+                            console.log(err);
+                        /* res.json({
+                            totalProducts: session.totalProducts,
+                            isInCart: count,
+                        }); */
+                        res.redirect('back');
+                    })
                 })
             })
             .catch(next);
@@ -334,6 +357,9 @@ class ProductController {
                 session.save((err) => {
                     if (err)
                         console.log(err);
+                    /* res.json({
+                        totalProducts: session.totalProducts
+                    }); */
                     res.redirect('back');
                 })
             })
@@ -348,24 +374,25 @@ class ProductController {
 
         // validation input
         let product = await Product.findOne({ _id: productId });
-        if (input.currentSize == 'S' && product.quantityOfSizeS < input.numberOfProduct){
+        if (input.currentSize == 'S' && product.quantityOfSizeS < input.numberOfProduct) {
             error = 'Number of product is over in stock'
             input.numberOfProduct = product.quantityOfSizeS;
         }
-        if (input.currentSize == 'M' && product.quantityOfSizeM < input.numberOfProduct){
+        if (input.currentSize == 'M' && product.quantityOfSizeM < input.numberOfProduct) {
             error = 'Number of product is over in stock'
             input.numberOfProduct = product.quantityOfSizeM;
         }
-        if (input.currentSize == 'L' && product.quantityOfSizeL < input.numberOfProduct){
+        if (input.currentSize == 'L' && product.quantityOfSizeL < input.numberOfProduct) {
             error = 'Number of product is over in stock'
             input.numberOfProduct = product.quantityOfSizeL;
         }
 
         let sessionId = req.signedCookies.sessionId;
-        let session = await  Session.findOne({ sessionId: sessionId });
+        let session = await Session.findOne({ sessionId: sessionId });
         let numberOfProductBeforeUpdate = session.cart.get(productId);
         session.cart.set(productId, input.numberOfProduct);
         session.size.set(productId, input.currentSize);
+        console.log(input.currentSize);
         session.totalProducts += parseInt(input.numberOfProduct) - parseInt(numberOfProductBeforeUpdate);
 
         // set total price in cart
