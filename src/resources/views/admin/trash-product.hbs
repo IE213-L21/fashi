@@ -30,29 +30,33 @@
                 <div class="container-fluid mt-4 mb-4">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col">Stt</th>
+                           <tr>
+                                <th scope="col">STT</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Category</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Club</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Size</th>
+                                <th scope="col">Quantity of size S</th>
+                                <th scope="col">Quantity of size M</th>
+                                <th scope="col">Quantity of size L</th>
                                 <th scope="col">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each products}}
                             <tr>
-                                <th scope="row">{{sum @index 1}}</th>
-                                <td>{{this.name}}</td>
-                                <td>{{this.price}}</td>
-                                <td>{{this.category}}</td>
-                                <td>{{this.description}}</td>
-                                <td><img src="/img/create-img/{{this.image}}" alt="" style="width: 240px;"></td>
-                                <td>{{this.gender}}</td>
-                                <td>{{this.size}}</td>
+                               <td scope="row">{{sum @index 1}}</td>
+                                    <td><a href="/product/{{this.slug}}">{{this.name}}</a></td>
+                                    <td>{{this.price}} </td>
+                                    <td>{{this.league}}</td>
+                                    <td>{{this.club}}</td>
+                                    <td>{{this.description}}</td>
+                                    <td><img src="{{this.image}}" alt="{{this.name}}" style="width: 240px;"></td>
+                                    <td>{{this.quantityOfSizeS}}</td>
+                                    <td>{{this.quantityOfSizeM}}</td>
+                                    <td>{{this.quantityOfSizeL}}</td>
                                 <td>
                                     <a type="button" href="" class="btn btn-outline-primary btn-restore" data-id="{{this._id}}">Khôi
                                         Phục</a>

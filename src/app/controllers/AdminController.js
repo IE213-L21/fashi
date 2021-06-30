@@ -153,6 +153,7 @@ class AdminController {
     }
 
     bill(req, res, next) {
+        
        Checkout.find({})
         .then((checkouts) =>
             res.render('admin/bill', {
