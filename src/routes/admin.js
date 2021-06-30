@@ -27,6 +27,8 @@ router.post('/create-club', adminController.saveCreateClub)
 router.get('/:id/edit-product', uploads.single('image'), adminController.editProduct)
 router.put('/update/:id', uploads.single('image'), adminController.updateProduct)
 
+router.get('/bill', adminController.bill)
+
 router.get('/', adminController.adminHome)
 router.get('/trash-product', adminController.trashProduct)
 router.delete('/trash-product/:id/force',adminController.deleteForever)

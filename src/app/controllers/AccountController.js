@@ -6,6 +6,8 @@ class AccountController {
         res.render('account/login');
     }
      
+  
+     
     // [GET] /
     register(req, res) {
         res.render('account/register');

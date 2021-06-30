@@ -1,0 +1,102 @@
+<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="container-fluid mt-4 mb-4 ">
+                    <form   name="container-form" method="POST" action="/admin/handle-form-actions">
+                        <div class="trash-product mt-0 mb-4">
+                            <h3 style="margin-top: 10px; margin-bottom: 26px;">Manage Bill</h3>
+                        </div>
+                        <table class="table">
+                            <thead> 
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Name user</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Payment method</th>
+                                    <th scope="col">Name product</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each checkouts}}
+                                <tr>
+                                    <td scope="row">{{sum @index 1}}</td>
+                                    <td>{{this.firstname}} {{this.lastname}} </td>
+                                    <td>{{this.address}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.phone}}</td>
+                                    <td>{{this.paymentMethod}}</td>
+                                    <td>
+                                        <table>
+                                            {{!--{{#each }}--}}
+                                            <tr>
+                                                <td>Name product</td>
+                                            </tr>
+                                            {{!--{{/each}}--}}
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>S</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>2</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>{{this.payment}}</td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="container-fluid">
+            </div>
+
+            <form name="form-delete-product" method="POST" ></form>
+            {{!--<form name="form-sort-product" method="GET" action=""></form>--}}
+            <script>
+                document.addEventListener("DOMContentLoaded",function(){
+                   
+                })
+
+            </script>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+	<div class="clearfix"></div>
+</div>
+
+
+
+
+{{!--<div id="wrapper">
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                           
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+	<div class="clearfix"></div>
+</div>--}}

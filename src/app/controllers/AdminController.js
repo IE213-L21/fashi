@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const League = require('../models/league');
 const Club = require('../models/club');
+const Checkout = require('../models/checkout')
 const { mongooseToObject } = require('../../util/mongoose')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 
@@ -149,6 +150,17 @@ class AdminController {
                 console.log(err);
             res.redirect('/admin/create-club');
         })
+    }
+
+    bill(req, res, next) {
+       Checkout.find({})
+        .then((checkouts) =>
+            res.render('admin/bill', {
+                layout: 'admin',
+                checkouts: multipleMongooseToObject(checkouts),
+            }),
+        )
+        .catch(next)
     }
 }
 

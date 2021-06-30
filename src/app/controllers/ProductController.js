@@ -284,7 +284,7 @@ class ProductController {
         Session.findOne({ sessionId: sessionID })
             .then((session) => {
                 let count = session.cart.get(productID) || 0;
-                Product.findOne({ _id: productID }).then(product => {
+                Product.findOne({ _id: productID}).then(product => {
                     if (product.quantityOfSizeS > 0) {
                         session.size.set(productID, 'S');
                     }
@@ -319,7 +319,7 @@ class ProductController {
             .then((session) => {
                 let count = session.cart.get(productID);
                 session.cart.delete(productID);
-                session.size.delete(productID);
+                //session.size.delete(productID);   
                 session.totalProducts -= count;
                 session.save((err) => {
                     if (err)
