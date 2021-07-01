@@ -121,7 +121,12 @@ class ProductController {
         }
     }
 
-    search(req, res, next) {
+    async search(req, res, next) {
+        if (req.isAuthenticated()) {
+            var user = await User.find({ 'info.firstname': req.session.User.name })
+            var username = user.map(user => user = user.toObject())
+            var role = username[0].role === 'admin' ? 'admin' : ''
+        }
         const keyword = req.query.name;
         Promise.all([Product.find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } }), League.find({}), Club.find({})])
             .then(([products, leagues, clubs]) => {
@@ -132,6 +137,8 @@ class ProductController {
                     products: multipleMongooseToObject(products),
                     leagues: multipleMongooseToObject(leagues),
                     clubs: multipleMongooseToObject(clubs),
+                    role: role,
+                    user: username[0].info,
                 });
             })
             .catch(next);
@@ -172,10 +179,17 @@ class ProductController {
     // [GET] /
     async shoppingCart(req, res) {
         try {
+            if (req.isAuthenticated()) {
+                var user = await User.find({ 'info.firstname': req.session.User.name })
+                var username = user.map(user => user = user.toObject())
+                var role = username[0].role === 'admin' ? 'admin' : ''
+            }
             res.render('product/shopping-cart', {
                 productsInCart: res.locals.productsInCart,
                 totalPriceInCart: res.locals.totalPriceInCart,
-                session: res.locals.session
+                session: res.locals.session,
+                role: role,
+                user: username[0].info,
             });
         } catch (err) {
             if (err)
@@ -185,11 +199,18 @@ class ProductController {
     }
 
     // [GET] /
-    productDetail(req, res, next) {
+    async productDetail(req, res, next) {
+        if (req.isAuthenticated()) {
+            var user = await User.find({ 'info.firstname': req.session.User.name })
+            var username = user.map(user => user = user.toObject())
+            var role = username[0].role === 'admin' ? 'admin' : ''
+        }
         Product.findOne({ slug: req.params.slug })
             .then((product) => {
                 res.render('product/product-detail', {
-                    product: mongooseToObject(product)
+                    product: mongooseToObject(product),
+                    role: role,
+                    user: username[0].info,
                 });
             })
             .catch(next);
@@ -209,6 +230,11 @@ class ProductController {
         //     .find({ league: leagueNeededRender.name })
         //     .skip(begin)
         //     .limit(productsPerPage);
+        if (req.isAuthenticated()) {
+            var user = await User.find({ 'info.firstname': req.session.User.name })
+            var username = user.map(user => user = user.toObject())
+            var role = username[0].role === 'admin' ? 'admin' : ''
+        }
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
                 .find({ deleted: "false", league: leagueNeededRender.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
@@ -227,7 +253,9 @@ class ProductController {
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
-            link: `/leagues/${req.params.league}`
+            link: `/leagues/${req.params.league}`,
+            role: role,
+            user: username[0].info,
         })
     }
 
@@ -258,13 +286,20 @@ class ProductController {
                 .skip(begin)
                 .limit(productsPerPage);
         }
+        if (req.isAuthenticated()) {
+            var user = await User.find({ 'info.firstname': req.session.User.name })
+            var username = user.map(user => user = user.toObject())
+            var role = username[0].role === 'admin' ? 'admin' : ''
+        }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
             clubs: multipleMongooseToObject(clubs),
             totalPage: totalPage,
             page: page,
-            link: `/clubs/${req.params.club}`
+            link: `/clubs/${req.params.club}`,
+            role: role,
+            user: username[0].info,
         })
     }
 
