@@ -177,7 +177,7 @@ class ProductController {
     }
 
     // [GET] /
-    async shoppingCart(req, res) {
+    async shoppingCart(req, res, next) {
         try {
             if (req.isAuthenticated()) {
                 var user = await User.find({ 'info.firstname': req.session.User.name })
