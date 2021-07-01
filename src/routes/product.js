@@ -5,7 +5,7 @@ const productController = require('../app/controllers/ProductController');
 
 router.get('/', productController.showAllProducts);
 router.post('/check-out/confirm', productController.confirmCheckout);
-router.get('/check-out/:sessionId', productController.checkOut);   
+router.get('/check-out', productController.checkOut);   
 router.get('/product', productController.product);
 router.get('/shopping-cart/:sessionID', productController.shoppingCart);
 router.post('/search', productController.searchRealTime)

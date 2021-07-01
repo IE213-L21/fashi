@@ -34,27 +34,22 @@
                                     <td>{{this.phone}}</td>
                                     <td>{{this.paymentMethod}}</td>
                                     <td>
-                                        <table>
-                                            {{!--{{#each }}--}}
-                                            <tr>
-                                                <td>Name product</td>
-                                            </tr>
-                                            {{!--{{/each}}--}}
-                                        </table>
+                                        {{#each this.productList}}
+                                        {{this.name}}
+                                        <br>
+                                        {{/each}}
                                     </td>
                                     <td>
-                                        <table>
-                                            <tr>
-                                                <td>S</td>
-                                            </tr>
-                                        </table>
+                                        {{#each this.productList}}
+                                        {{this.size}}
+                                        <br>
+                                        {{/each}}
                                     </td>
                                     <td>
-                                        <table>
-                                            <tr>
-                                                <td>2</td>
-                                            </tr>
-                                        </table>
+                                        {{#each this.productList}}
+                                        {{this.quantity}}
+                                        <br>
+                                        {{/each}}
                                     </td>
                                     <td>{{this.payment}}.000đ</td>
                                 </tr>

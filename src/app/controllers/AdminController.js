@@ -152,16 +152,30 @@ class AdminController {
         })
     }
 
-    bill(req, res, next) {
-        
-       Checkout.find({})
-        .then((checkouts) =>
-            res.render('admin/bill', {
-                layout: 'admin',
-                checkouts: multipleMongooseToObject(checkouts),
-            }),
-        )
-        .catch(next)
+    async bill(req, res, next) {
+        let checkoutList = await Checkout.find({}).lean();
+        for (let i = 0; i < checkoutList.length; i++) {
+            checkoutList[i].productList = [];
+            for (const [key, value] of Object.entries(checkoutList[i].cart)) {
+                let newProduct = await Product.findOne({ _id: key });
+                checkoutList[i].productList.push({
+                    name: newProduct.name,
+                    quantity: value
+                });
+            }
+            let indexOfProductList = 0;
+            for (const [key, value] of Object.entries(checkoutList[i].size)) {
+                Object.assign(checkoutList[i].productList[indexOfProductList], {
+                    size: value
+                });
+                indexOfProductList++;
+            }
+        };
+
+        res.render('admin/bill', {
+            layout: 'admin',
+            checkouts: checkoutList,
+        });
     }
 }
 

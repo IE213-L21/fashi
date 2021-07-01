@@ -284,7 +284,7 @@ class ProductController {
         Session.findOne({ sessionId: sessionID })
             .then((session) => {
                 let count = session.cart.get(productID) || 0;
-                Product.findOne({ _id: productID}).then(product => {
+                Product.findOne({ _id: productID }).then(product => {
                     if (product.quantityOfSizeS > 0) {
                         session.size.set(productID, 'S');
                     }
@@ -294,7 +294,7 @@ class ProductController {
                     else if (product.quantityOfSizeM == 0) {
                         session.size.set(productID, 'L');
                     }
-                    
+
                     session.cart.set(productID, count + numberOfProduct);
                     session.totalProducts += numberOfProduct;
                     session.save((err) => {
@@ -390,19 +390,50 @@ class ProductController {
         for (let [key, value] of session.cart.entries()) {
             Object.assign(input.cart, {
                 [key]: value
-            })         
+            })
         };
         for (let [key, value] of session.size.entries()) {
             Object.assign(input.size, {
                 [key]: value
-            })           
+            })
         };
         input.payment = res.locals.totalPriceInCart;
         const newCheckout = new Checkout({
             ...input
         });
         await newCheckout.save();
-        res.json(input);
+
+        // set new inventory
+        let productList = [];
+        for (const [key, value] of Object.entries(input.cart)) {
+            productList.push({
+                id: key,
+                quantity: value
+            });
+        }
+        let indexOfProductList = 0;
+        for (const [key, value] of Object.entries(input.size)) {
+            Object.assign(productList[indexOfProductList], {
+                size: value
+            });
+            indexOfProductList++;
+        }
+        for (let i = 0; i < productList.length; i++) {
+            let product = await Product.findOne({ _id: productList[i].id }).lean();
+            if (productList[i].size == 'S') {
+                product.quantityOfSizeS -= productList[i].quantity;
+            }
+            if (productList[i].size == 'M') {
+                product.quantityOfSizeM -= productList[i].quantity;
+            }
+            if (productList[i].size == 'L') {
+                product.quantityOfSizeL -= productList[i].quantity;
+            }
+            await Product.updateOne({ _id: productList[i].id }, product);
+        }
+
+        // render view
+        res.redirect('back');
     }
 }
 
