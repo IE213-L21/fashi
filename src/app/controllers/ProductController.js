@@ -432,8 +432,8 @@ class ProductController {
             await Product.updateOne({ _id: productList[i].id }, product);
         }
 
-        // render view
-        res.redirect('back');
+        // pop up alert and redirect to home page
+        res.write("<script language='javascript'>window.alert('Order successfully');window.location='/';</script>");
     }
 }
 
