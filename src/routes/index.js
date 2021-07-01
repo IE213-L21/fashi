@@ -3,7 +3,7 @@ const blogRouter = require('./blog');
 const accountRouter = require('./account');
 const productRouter = require('./product');
 const adminRouter = require('./admin');
-const notfound = require('../app/controllers/404')
+const notfound = require('../app/controllers/NotFoundController')
 
 const adminAuthentication = require('../app/middlewares/adminAuthentication');
 

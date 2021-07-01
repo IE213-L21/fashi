@@ -4,6 +4,7 @@ const Club = require('../models/club')
 const User = require('../models/user');
 const Session = require('../models/sessionID');
 const Checkout = require('../models/checkout');
+const sendEmail = require('./EmailController')
 const { multipleMongooseToObject } = require('../../util/mongoose')
 const { mongooseToObject } = require('../../util/mongoose')
 
@@ -419,6 +420,7 @@ class ProductController {
 
     async confirmCheckout(req, res) {
         let input = req.body;
+        console.log(input);
         input.cart = {};
         input.size = {};
         let session = res.locals.session;
@@ -450,9 +452,10 @@ class ProductController {
         for (const [key, value] of Object.entries(input.size)) {
             Object.assign(productList[indexOfProductList], {
                 size: value
-            });
+            });        
             indexOfProductList++;
         }
+        console.log(productList);
         for (let i = 0; i < productList.length; i++) {
             let product = await Product.findOne({ _id: productList[i].id }).lean();
             if (productList[i].size == 'S') {
@@ -467,6 +470,8 @@ class ProductController {
             await Product.updateOne({ _id: productList[i].id }, product);
         }
 
+        // const html=``
+        // sendEmail(req.body.email,'Đơn hàng FashiShop',html)
         // pop up alert and redirect to home page
         res.write("<script language='javascript'>window.alert('Order successfully');window.location='/';</script>");
     }
