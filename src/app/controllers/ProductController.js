@@ -178,18 +178,18 @@ class ProductController {
 
     // [GET] /
     async shoppingCart(req, res, next) {
+        if (req.isAuthenticated()) {
+            var user = await User.find({ 'info.firstname': req.session.User.name })
+            var username = user.map(user => user = user.toObject())
+            var role = username[0].role === 'admin' ? 'admin' : ''
+        }
         try {
-            if (req.isAuthenticated()) {
-                var user = await User.find({ 'info.firstname': req.session.User.name })
-                var username = user.map(user => user = user.toObject())
-                var role = username[0].role === 'admin' ? 'admin' : ''
-            }
             res.render('product/shopping-cart', {
                 productsInCart: res.locals.productsInCart,
                 totalPriceInCart: res.locals.totalPriceInCart,
                 session: res.locals.session,
-                role: role,
-                user: username[0].info,
+                role: role ? role : '',
+                user: req.isAuthenticated() ? username[0].info : '',
             });
         } catch (err) {
             if (err)
@@ -210,7 +210,7 @@ class ProductController {
                 res.render('product/product-detail', {
                     product: mongooseToObject(product),
                     role: role,
-                    user: username[0].info,
+                    user: req.isAuthenticated() ? username[0].info : '',
                 });
             })
             .catch(next);
@@ -255,7 +255,7 @@ class ProductController {
             page: page,
             link: `/leagues/${req.params.league}`,
             role: role,
-            user: username[0].info,
+            user: req.isAuthenticated() ? username[0].info : '',
         })
     }
 
@@ -299,7 +299,7 @@ class ProductController {
             page: page,
             link: `/clubs/${req.params.club}`,
             role: role,
-            user: username[0].info,
+            user: req.isAuthenticated() ? username[0].info : '',
         })
     }
 
