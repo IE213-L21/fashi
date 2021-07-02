@@ -11,7 +11,7 @@ function route(app) {
     app.use('/blogs', blogRouter);
     app.use('/account', accountRouter);
     app.use('/product', productRouter);
-    app.use('/admin', adminAuthentication, adminRouter);
+    app.use('/admin', /* adminAuthentication, */ adminRouter);
     app.use('/', siteRouter);
     app.use('/*', notfound)
 }

@@ -69,7 +69,12 @@ class ProductController {
                 const begin = (page - 1) * productsPerPage;
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
                 const products = await Product
-                    .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                    .find({ deleted: 'false', $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                        { name: 'Arsenal'}
+                    ]})
                     .skip(begin)
                     .limit(productsPerPage);
                 res.render('product/shop', {
@@ -98,13 +103,21 @@ class ProductController {
                 const totalPage = Math.ceil(numberOfProducts / productsPerPage);
                 if (req.query.hasOwnProperty('_sort')) {
                     var products = await Product
-                        .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                    .find({ deleted: 'false', $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]})
                         .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                         .skip(begin)
                         .limit(productsPerPage);
                 } else {
                     var products = await Product
-                        .find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+                    .find({ deleted: 'false', $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]})
                         .skip(begin)
                         .limit(productsPerPage);
                 }
@@ -129,7 +142,11 @@ class ProductController {
             var role = username[0].role === 'admin' ? 'admin' : ''
         }
         const keyword = req.query.name;
-        Promise.all([Product.find({ deleted: "false", quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } }), League.find({}), Club.find({})])
+        Promise.all([Product.find({ deleted: 'false', $or: [
+            { quantityOfSizeS: { $gt: 0 } },
+            { quantityOfSizeM: { $gt: 0 } },
+            { quantityOfSizeL: { $gt: 0 } },
+        ]}), League.find({}), Club.find({})])
             .then(([products, leagues, clubs]) => {
                 products = products.filter((product) => {
                     return product.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
@@ -238,13 +255,21 @@ class ProductController {
         }
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
-                .find({ deleted: "false", league: leagueNeededRender.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+            .find({ deleted: 'false', league: leagueNeededRender.name, $or: [
+                { quantityOfSizeS: { $gt: 0 } },
+                { quantityOfSizeM: { $gt: 0 } },
+                { quantityOfSizeL: { $gt: 0 } },
+            ]})
                 .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
         } else {
             var products = await Product
-                .find({ deleted: "false", league: leagueNeededRender.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+            .find({ deleted: 'false', league: leagueNeededRender.name, $or: [
+                { quantityOfSizeS: { $gt: 0 } },
+                { quantityOfSizeM: { $gt: 0 } },
+                { quantityOfSizeL: { $gt: 0 } },
+            ]})
                 .skip(begin)
                 .limit(productsPerPage);
         }
@@ -277,13 +302,21 @@ class ProductController {
 
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
-                .find({ deleted: "false", club: clubFound.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+            .find({ deleted: 'false', club: clubFound.name, $or: [
+                { quantityOfSizeS: { $gt: 0 } },
+                { quantityOfSizeM: { $gt: 0 } },
+                { quantityOfSizeL: { $gt: 0 } },
+            ]})
                 .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
         } else {
             var products = await Product
-                .find({ deleted: "false", club: clubFound.name, quantityOfSizeS: { $gt: 0 }, quantityOfSizeM: { $gt: 0 }, quantityOfSizeL: { $gt: 0 } })
+            .find({ deleted: 'false', club: clubFound.name, $or: [
+                { quantityOfSizeS: { $gt: 0 } },
+                { quantityOfSizeM: { $gt: 0 } },
+                { quantityOfSizeL: { $gt: 0 } },
+            ]})
                 .skip(begin)
                 .limit(productsPerPage);
         }
