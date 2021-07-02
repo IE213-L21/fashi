@@ -473,6 +473,11 @@ class ProductController {
         // const html=``
         // sendEmail(req.body.email,'Đơn hàng FashiShop',html)
         // pop up alert and redirect to home page
+
+        // clear session
+        res.clearCookie('sessionId');
+
+        // show alert and redirect
         res.write("<script language='javascript'>window.alert('Order successfully');window.location='/';</script>");
     }
 }
