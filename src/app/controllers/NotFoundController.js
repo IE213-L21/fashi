@@ -12,6 +12,6 @@ module.exports = async function notfound(req, res){
                 })
             })
     }else{           
-        res.render('404');
+        res.render('404');  
     }
 }

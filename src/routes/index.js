@@ -13,7 +13,7 @@ function route(app) {
     app.use('/product', productRouter);
     app.use('/admin', adminAuthentication, adminRouter);
     app.use('/', siteRouter);
-    app.use('/*', notfound)
+    //app.use('/*', notfound)
 }
 
 module.exports = route;

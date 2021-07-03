@@ -66,11 +66,16 @@ passport.use('local.login', new LocalStrategy({
         'local.email': email
     })
         .then(function (user) {
+            if (!user) {
+              return done(null, false, {
+                  message: 'Email not exist !!'
+              });
+            }
             bcrypt.compare(password, user.local.password, function (err,result) {
 
                 if (err) { return done(err); }
                 if(!result) {
-                    return done(null, false, { message: 'Incorrect username and password' });
+                    return done(null, false, { message: 'Incorrect password !!' });
                 }
                 req.session.User = {
                     name:user.info.firstname,
