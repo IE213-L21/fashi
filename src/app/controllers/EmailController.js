@@ -2,13 +2,18 @@ const nodemailer = require('nodemailer')
 
 module.exports = function sendMail(toMail,header,content){
     const transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
+        service: 'gmail',
+        // host: "smtp.ethereal.email",
+        // port: 465,
+        // secure: true, // true for 465, false for other ports
         auth: {
-        user: 'babyking1st14@gmail.com', // generated ethereal user
-        pass: 'dangngocquang', // generated ethereal password
+            user: 'babyking1st14@gmail.com', // generated ethereal user
+            pass: 'dangngocquang', // generated ethereal password
         },
+        // tls:{
+        //     rejectUnauthorized:false
+        // },
+        // connectionTimeout: 5 * 60 * 1000, // 5 min
     })
 
     const mailOptions = {
@@ -17,8 +22,6 @@ module.exports = function sendMail(toMail,header,content){
         subject:header,
         html:content
     }
-
-    console.log(content)
     transporter.sendMail(mailOptions,function(err,info){
         if(err){
             console.log(err)
