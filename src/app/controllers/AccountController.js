@@ -19,7 +19,17 @@ class AccountController {
         req.session.destroy();
         res.redirect('/')
     }
+
+    // [GET] /account/setting
+    setting(req, res) {
+        res.render('account/setting');
+    }
    
+    // [POST] /account/setting
+    changePassword(req, res) {
+        let input = req.body;
+        res.json(input);
+    }
 }
 
 module.exports = new AccountController();
