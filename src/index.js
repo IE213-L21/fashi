@@ -14,6 +14,7 @@ const db = require('./config/db');
 const sortMiddleware = require('./app/middlewares/sortMiddleware');
 const setSession = require('./app/middlewares/setSession');
 const renderCart = require('./app/middlewares/renderCart');
+const { showUserInfo } = require('./app/middlewares/isLogin');
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
@@ -30,6 +31,7 @@ app.use(express.json()); // parse application/json
 app.use(cookieParser('arsenalrobertpires'));
 app.use(setSession);
 app.use(renderCart);
+/* app.use(showUserInfo); */
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 
