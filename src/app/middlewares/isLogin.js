@@ -2,16 +2,16 @@ const User = require('../models/user.js');
 
 async function showUserInfo(req, res, next) {
     if (req.isAuthenticated()) {
-        const user = await User.find({ 'info.firstname': req.session.User.name });
-        const username = user.map(user => user = user.toObject());
-        const role = username[0].role === 'admin' ? 'admin' : '';
-        res.locals.email = username[0].local.email;
+        const currentUser = await User.findOne({ _id: req.session.passport.user }).lean();
+        const role = currentUser.role === 'admin' ? 'admin' : '';
+        res.locals.email = currentUser.local.email;
         res.locals.role = role;
-        res.locals.user = username[0].info;
+        res.locals.user = currentUser.info;
     }
     else {
         res.locals.role = "";
         res.locals.user = "";
+        res.locals.email = "";
     }
     next();
 }
