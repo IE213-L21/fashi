@@ -77,7 +77,8 @@ class AccountController {
             })
         }
         else {
-            
+            currentUser.local.password = bcrypt.hashSync(input.newPassword, 10);
+            await User.updateOne({ _id: req.session.passport.user }, currentUser);
             const message = 'Change password succesfully';
             return res.render('account/change-password', {
                 message,
