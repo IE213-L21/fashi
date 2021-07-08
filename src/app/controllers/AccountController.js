@@ -28,7 +28,7 @@ class AccountController {
     // [POST] /account/setting
     changePassword(req, res) {
         let input = req.body;
-        res.json(input);
+        res.json(input.oldPassword);
     }
 }
 
