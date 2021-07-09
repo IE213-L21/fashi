@@ -5,7 +5,7 @@ const productRouter = require('./product');
 const adminRouter = require('./admin');
 const notfound = require('../app/controllers/NotFoundController');
 
-const showUserInfo = require('../app/middlewares/isLogin.js');
+const showUserInfo = require('../app/middlewares/showUserInfo.js');
 const adminAuthentication = require('../app/middlewares/adminAuthentication');
 
 function route(app) {
