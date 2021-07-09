@@ -6,7 +6,7 @@ class AccountController {
 
     // [GET] /
     login(req, res) {
-        const messages = req.flash('error')
+        const messages = req.flash('error');
         res.render('account/login', {
             messages: messages
         });

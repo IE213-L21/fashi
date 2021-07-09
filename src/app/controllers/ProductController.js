@@ -68,11 +68,6 @@ class ProductController {
     }
 
     async search(req, res, next) {
-        if (req.isAuthenticated()) {
-            var user = await User.find({ 'info.firstname': req.session.User.name })
-            var username = user.map(user => user = user.toObject())
-            var role = username[0].role === 'admin' ? 'admin' : ''
-        }
         const keyword = req.query.name;
         Promise.all([Product.find({
             deleted: 'false', $or: [
@@ -89,8 +84,8 @@ class ProductController {
                     products: multipleMongooseToObject(products),
                     leagues: multipleMongooseToObject(leagues),
                     clubs: multipleMongooseToObject(clubs),
-                    role: role,
-                    user: req.isAuthenticated() ? username[0].info : '',
+                    role: res.locals.role,
+                    user: res.locals.user,
                 });
             })
             .catch(next);
@@ -130,18 +125,13 @@ class ProductController {
 
     // [GET] /
     async shoppingCart(req, res, next) {
-        if (req.isAuthenticated()) {
-            var user = await User.find({ 'info.firstname': req.session.User.name })
-            var username = user.map(user => user = user.toObject())
-            var role = username[0].role === 'admin' ? 'admin' : ''
-        }
         try {
             res.render('product/shopping-cart', {
                 productsInCart: res.locals.productsInCart,
                 totalPriceInCart: res.locals.totalPriceInCart,
                 session: res.locals.session,
-                role: role ? role : '',
-                user: req.isAuthenticated() ? username[0].info : '',
+                role: res.locals.role,
+                user: res.locals.user,
             });
         } catch (err) {
             if (err)
@@ -152,17 +142,12 @@ class ProductController {
 
     // [GET] /
     async productDetail(req, res, next) {
-        if (req.isAuthenticated()) {
-            var user = await User.find({ 'info.firstname': req.session.User.name })
-            var username = user.map(user => user = user.toObject())
-            var role = username[0].role === 'admin' ? 'admin' : ''
-        }
         Product.findOne({ slug: req.params.slug })
             .then((product) => {
                 res.render('product/product-detail', {
                     product: mongooseToObject(product),
-                    role: role,
-                    user: req.isAuthenticated() ? username[0].info : '',
+                    role: res.locals.role,
+                    user: res.locals.user,
                 });
             })
             .catch(next);
@@ -178,15 +163,7 @@ class ProductController {
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-        // const products = await Product
-        //     .find({ league: leagueNeededRender.name })
-        //     .skip(begin)
-        //     .limit(productsPerPage);
-        if (req.isAuthenticated()) {
-            var user = await User.find({ 'info.firstname': req.session.User.name })
-            var username = user.map(user => user = user.toObject())
-            var role = username[0].role === 'admin' ? 'admin' : ''
-        }
+        
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
                 .find({
@@ -218,8 +195,8 @@ class ProductController {
             totalPage: totalPage,
             page: page,
             link: `/leagues/${req.params.league}`,
-            role: role,
-            user: req.isAuthenticated() ? username[0].info : '',
+            role: res.locals.role,
+            user: res.locals.user,
         })
     }
 
@@ -233,10 +210,6 @@ class ProductController {
         const page = req.query.page || 1;
         const begin = (page - 1) * productsPerPage;
         const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-        // const products = await Product
-        //     .find({ club: clubFound.name })
-        //     .skip(begin)
-        //     .limit(productsPerPage);
 
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
@@ -262,11 +235,6 @@ class ProductController {
                 .skip(begin)
                 .limit(productsPerPage);
         }
-        if (req.isAuthenticated()) {
-            var user = await User.find({ 'info.firstname': req.session.User.name })
-            var username = user.map(user => user = user.toObject())
-            var role = username[0].role === 'admin' ? 'admin' : ''
-        }
         res.render('product/shop', {
             products: multipleMongooseToObject(products),
             leagues: multipleMongooseToObject(leagues),
@@ -274,8 +242,8 @@ class ProductController {
             totalPage: totalPage,
             page: page,
             link: `/clubs/${req.params.club}`,
-            role: role,
-            user: req.isAuthenticated() ? username[0].info : '',
+            role: res.locals.role,
+            user: res.locals.user,
         })
     }
 
@@ -311,10 +279,6 @@ class ProductController {
                     session.save((err) => {
                         if (err)
                             console.log(err);
-                        /* res.json({
-                            totalProducts: session.totalProducts,
-                            isInCart: count,
-                        }); */
                         res.redirect('back');
                     })
                 })
@@ -329,15 +293,11 @@ class ProductController {
         Session.findOne({ sessionId: sessionID })
             .then((session) => {
                 let count = session.cart.get(productID);
-                session.cart.delete(productID);
-                //session.size.delete(productID);   
+                session.cart.delete(productID);  
                 session.totalProducts -= count;
                 session.save((err) => {
                     if (err)
                         console.log(err);
-                    /* res.json({
-                        totalProducts: session.totalProducts
-                    }); */
                     res.redirect('back');
                 })
             })

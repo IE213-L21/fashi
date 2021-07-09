@@ -17,6 +17,4 @@ async function showUserInfo(req, res, next) {
     next();
 }
 
-module.exports = {
-    showUserInfo
-}
+module.exports = showUserInfo;
