@@ -11,138 +11,59 @@ const { mongooseToObject } = require('../../util/mongoose')
 class ProductController {
 
     async checkOut(req, res) {
-        if (req.isAuthenticated()) {
-            const user = await User.find({ 'info.firstname': req.session.User.name })
-            const username = user.map(user => user = user.toObject())
-            const role = username[0].role === 'admin' ? 'admin' : ''
-            const email = username[0].local.email;
-            try {
-                res.render('product/check-out', {
-                    productsInCart: res.locals.productsInCart,
-                    totalProductsInCart: res.locals.totalProductsInCart,
-                    totalPriceInCart: res.locals.totalPriceInCart,
-                    session: res.locals.session,
-                    user: username[0].info,
-                    role,
-                    email
-                });
-            } catch (err) {
-                if (err)
-                    console.log(err);
-                next(err);
-            };
-        }
-        else {
-            try {
-                res.render('product/check-out', {
-                    productsInCart: res.locals.productsInCart,
-                    totalProductsInCart: res.locals.totalProductsInCart,
-                    totalPriceInCart: res.locals.totalPriceInCart,
-                    session: res.locals.session,
-                });
-            } catch (err) {
-                if (err)
-                    console.log(err);
-                next(err);
-            };
-        }
-    }
-
-    // [GET] /
-    product(req, res) {
-        res.render('product/product');
+        try {
+            res.render('product/check-out', {
+                productsInCart: res.locals.productsInCart,
+                totalProductsInCart: res.locals.totalProductsInCart,
+                totalPriceInCart: res.locals.totalPriceInCart,
+                session: res.locals.session,
+                user: res.locals.user,
+                role: res.locals.role,
+                email: res.locals.email,
+            });
+            console.log(res.locals.user)
+        } catch (err) {
+            if (err)
+                console.log(err);
+            next(err);
+        };
     }
 
     // [GET] /
     async showAllProducts(req, res, next) {
-        if (req.isAuthenticated()) {
-            const user = await User.find({ 'info.firstname': req.session.User.name })
-            const username = user.map(user => user = user.toObject())
-            const role = username[0].role === 'admin' ? 'admin' : ''
-            try {
-                const leagues = await League.find({});
-                const clubs = await Club.find({});
+        try {
+            const leagues = await League.find({});
+            const clubs = await Club.find({});
 
-                const numberOfProducts = await Product.countDocuments({});
-                const productsPerPage = 6;
-                const page = req.query.page || 1;
-                const begin = (page - 1) * productsPerPage;
-                const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-                if (req.query.hasOwnProperty('_sort')) {
-                    var products = await Product
-                    .find({ deleted: 'false', $or: [
+            const numberOfProducts = await Product.countDocuments({});
+            const productsPerPage = 6;
+            const page = req.query.page || 1;
+            const begin = (page - 1) * productsPerPage;
+            const totalPage = Math.ceil(numberOfProducts / productsPerPage);
+            const products = await Product
+                .find({
+                    deleted: 'false', $or: [
                         { quantityOfSizeS: { $gt: 0 } },
                         { quantityOfSizeM: { $gt: 0 } },
                         { quantityOfSizeL: { $gt: 0 } },
-                    ]})
-                        .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
-                        .skip(begin)
-                        .limit(productsPerPage);
-                } else {
-                    var products = await Product
-                    .find({ deleted: 'false', $or: [
-                        { quantityOfSizeS: { $gt: 0 } },
-                        { quantityOfSizeM: { $gt: 0 } },
-                        { quantityOfSizeL: { $gt: 0 } },
-                    ]})
-                        .skip(begin)
-                        .limit(productsPerPage);
-                }
-                res.render('product/shop', {
-                    products: multipleMongooseToObject(products),
-                    leagues: multipleMongooseToObject(leagues),
-                    clubs: multipleMongooseToObject(clubs),
-                    totalPage: totalPage,
-                    page: page,
-                    role: role,
-                    user: username[0].info,
-                });
-            } catch (err) {
-                if (err)
-                    next(err);
-            }
-        }
-        else {
-            try {
-                const leagues = await League.find({});
-                const clubs = await Club.find({});
-
-                const numberOfProducts = await Product.countDocuments({});
-                const productsPerPage = 6;
-                const page = req.query.page || 1;
-                const begin = (page - 1) * productsPerPage;
-                const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-                if (req.query.hasOwnProperty('_sort')) {
-                    var products = await Product
-                    .find({ deleted: 'false', $or: [
-                        { quantityOfSizeS: { $gt: 0 } },
-                        { quantityOfSizeM: { $gt: 0 } },
-                        { quantityOfSizeL: { $gt: 0 } },
-                    ]})
-                        .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
-                        .skip(begin)
-                        .limit(productsPerPage);
-                } else {
-                    var products = await Product
-                    .find({ deleted: 'false', $or: [
-                        { quantityOfSizeS: { $gt: 0 } },
-                        { quantityOfSizeM: { $gt: 0 } },
-                        { quantityOfSizeL: { $gt: 0 } },
-                    ]})
-                        .skip(begin)
-                        .limit(productsPerPage);
-                }
-                res.render('product/shop', {
-                    products: multipleMongooseToObject(products),
-                    leagues: multipleMongooseToObject(leagues),
-                    clubs: multipleMongooseToObject(clubs),
-                    totalPage: totalPage,
-                    page: page,
-                });
-            } catch (err) {
-                if (err)
-                    next(err);
-            }
+                        { name: 'Arsenal' }
+                    ]
+                })
+                .skip(begin)
+                .limit(productsPerPage);
+            res.render('product/shop', {
+                products: multipleMongooseToObject(products),
+                leagues: multipleMongooseToObject(leagues),
+                clubs: multipleMongooseToObject(clubs),
+                totalPage: totalPage,
+                page: page,
+                user: res.locals.user,
+                role: res.locals.role,
+                email: res.locals.email,
+            });
+        } catch (err) {
+            if (err)
+                next(err);
         }
     }
 
@@ -153,11 +74,13 @@ class ProductController {
             var role = username[0].role === 'admin' ? 'admin' : ''
         }
         const keyword = req.query.name;
-        Promise.all([Product.find({ deleted: 'false', $or: [
-            { quantityOfSizeS: { $gt: 0 } },
-            { quantityOfSizeM: { $gt: 0 } },
-            { quantityOfSizeL: { $gt: 0 } },
-        ]}), League.find({}), Club.find({})])
+        Promise.all([Product.find({
+            deleted: 'false', $or: [
+                { quantityOfSizeS: { $gt: 0 } },
+                { quantityOfSizeM: { $gt: 0 } },
+                { quantityOfSizeL: { $gt: 0 } },
+            ]
+        }), League.find({}), Club.find({})])
             .then(([products, leagues, clubs]) => {
                 products = products.filter((product) => {
                     return product.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
@@ -266,21 +189,25 @@ class ProductController {
         }
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
-            .find({ deleted: 'false', league: leagueNeededRender.name, $or: [
-                { quantityOfSizeS: { $gt: 0 } },
-                { quantityOfSizeM: { $gt: 0 } },
-                { quantityOfSizeL: { $gt: 0 } },
-            ]})
+                .find({
+                    deleted: 'false', league: leagueNeededRender.name, $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]
+                })
                 .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
         } else {
             var products = await Product
-            .find({ deleted: 'false', league: leagueNeededRender.name, $or: [
-                { quantityOfSizeS: { $gt: 0 } },
-                { quantityOfSizeM: { $gt: 0 } },
-                { quantityOfSizeL: { $gt: 0 } },
-            ]})
+                .find({
+                    deleted: 'false', league: leagueNeededRender.name, $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]
+                })
                 .skip(begin)
                 .limit(productsPerPage);
         }
@@ -313,21 +240,25 @@ class ProductController {
 
         if (req.query.hasOwnProperty('_sort')) {
             var products = await Product
-            .find({ deleted: 'false', club: clubFound.name, $or: [
-                { quantityOfSizeS: { $gt: 0 } },
-                { quantityOfSizeM: { $gt: 0 } },
-                { quantityOfSizeL: { $gt: 0 } },
-            ]})
+                .find({
+                    deleted: 'false', club: clubFound.name, $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]
+                })
                 .sort({ 'price': req.query.type == 'asc' ? 1 : -1 })
                 .skip(begin)
                 .limit(productsPerPage);
         } else {
             var products = await Product
-            .find({ deleted: 'false', club: clubFound.name, $or: [
-                { quantityOfSizeS: { $gt: 0 } },
-                { quantityOfSizeM: { $gt: 0 } },
-                { quantityOfSizeL: { $gt: 0 } },
-            ]})
+                .find({
+                    deleted: 'false', club: clubFound.name, $or: [
+                        { quantityOfSizeS: { $gt: 0 } },
+                        { quantityOfSizeM: { $gt: 0 } },
+                        { quantityOfSizeL: { $gt: 0 } },
+                    ]
+                })
                 .skip(begin)
                 .limit(productsPerPage);
         }
@@ -496,7 +427,7 @@ class ProductController {
         for (const [key, value] of Object.entries(input.size)) {
             Object.assign(productList[indexOfProductList], {
                 size: value
-            });        
+            });
             indexOfProductList++;
         }
         console.log(productList);
@@ -514,7 +445,7 @@ class ProductController {
             await Product.updateOne({ _id: productList[i].id }, product);
         }
 
-        const html=`     
+        const html = `     
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
@@ -630,7 +561,7 @@ class ProductController {
                     </td>
                 </tr>
             </table>`
-        sendEmail(req.body.email,'Đơn hàng FashiShop',html)
+        sendEmail(req.body.email, 'Đơn hàng FashiShop', html)
 
         // clear session
         res.clearCookie('sessionId');
