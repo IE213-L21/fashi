@@ -12,16 +12,7 @@ class ProductController {
 
     async checkOut(req, res) {
         try {
-            res.render('product/check-out', {
-                productsInCart: res.locals.productsInCart,
-                totalProductsInCart: res.locals.totalProductsInCart,
-                totalPriceInCart: res.locals.totalPriceInCart,
-                session: res.locals.session,
-                user: res.locals.user,
-                role: res.locals.role,
-                email: res.locals.email,
-            });
-            console.log(res.locals.user)
+            res.render('product/check-out');
         } catch (err) {
             if (err)
                 console.log(err);
@@ -55,11 +46,6 @@ class ProductController {
                 products: multipleMongooseToObject(products),
                 leagues: multipleMongooseToObject(leagues),
                 clubs: multipleMongooseToObject(clubs),
-                totalPage: totalPage,
-                page: page,
-                user: res.locals.user,
-                role: res.locals.role,
-                email: res.locals.email,
             });
         } catch (err) {
             if (err)
@@ -84,8 +70,6 @@ class ProductController {
                     products: multipleMongooseToObject(products),
                     leagues: multipleMongooseToObject(leagues),
                     clubs: multipleMongooseToObject(clubs),
-                    role: res.locals.role,
-                    user: res.locals.user,
                 });
             })
             .catch(next);
@@ -126,13 +110,7 @@ class ProductController {
     // [GET] /
     async shoppingCart(req, res, next) {
         try {
-            res.render('product/shopping-cart', {
-                productsInCart: res.locals.productsInCart,
-                totalPriceInCart: res.locals.totalPriceInCart,
-                session: res.locals.session,
-                role: res.locals.role,
-                user: res.locals.user,
-            });
+            res.render('product/shopping-cart');
         } catch (err) {
             if (err)
                 console.log(err);
@@ -146,8 +124,6 @@ class ProductController {
             .then((product) => {
                 res.render('product/product-detail', {
                     product: mongooseToObject(product),
-                    role: res.locals.role,
-                    user: res.locals.user,
                 });
             })
             .catch(next);
@@ -195,8 +171,6 @@ class ProductController {
             totalPage: totalPage,
             page: page,
             link: `/leagues/${req.params.league}`,
-            role: res.locals.role,
-            user: res.locals.user,
         })
     }
 

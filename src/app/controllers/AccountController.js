@@ -4,7 +4,7 @@ const User = require('../models/user.js');
 
 class AccountController {
 
-    // [GET] /
+    // [GET] /account/login
     login(req, res) {
         const messages = req.flash('error');
         res.render('account/login', {
@@ -12,7 +12,7 @@ class AccountController {
         });
     }
 
-    // [GET] /
+    // [GET] /account/register
     register(req, res) {
         res.render('account/register');
     }
