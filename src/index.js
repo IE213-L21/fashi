@@ -17,6 +17,8 @@ const renderCart = require('./app/middlewares/renderCart');
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+require('dotenv').config()
+
 /* Khai báo để sử dụng kịch bản passport */
 const passportEX = require('./config/passport/passport');
 const app = express();

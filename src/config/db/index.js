@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function connect() {
     try { 
-        await mongoose.connect('mongodb+srv://admin:WnZp0QTgxrypEhhR@cluster0.fxllx.mongodb.net/fashi?retryWrites=true&w=majority?authSource=yourDB&w=1', {
+        await mongoose.connect(process.env.DB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
@@ -15,4 +15,4 @@ async function connect() {
 
 }
 
-module.exports = {connect}
+module.exports = { connect }
