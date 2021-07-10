@@ -46,6 +46,8 @@ class ProductController {
                 products: multipleMongooseToObject(products),
                 leagues: multipleMongooseToObject(leagues),
                 clubs: multipleMongooseToObject(clubs),
+                totalPage,
+                page,
             });
         } catch (err) {
             if (err)
@@ -216,8 +218,6 @@ class ProductController {
             totalPage: totalPage,
             page: page,
             link: `/clubs/${req.params.club}`,
-            role: res.locals.role,
-            user: res.locals.user,
         })
     }
 
