@@ -641,16 +641,6 @@ ol {
 	z-index: 99;
 }
 
-.nav-item .nav-depart .depart-btn:before {
-	position: absolute;
-	color: #ffffff;
-	right: 20px;
-	top: 13px;
-	content: "";
-	font-family: FontAwesome;
-	font-size: 18px;
-}
-
 .nav-item .nav-depart .depart-btn i {
 	color: #ffffff;
 	font-size: 16px;
@@ -660,7 +650,7 @@ ol {
 	font-size: 14px;
 	font-weight: 700;
 	text-transform: uppercase;
-	margin-left: 16px;
+	display: block;
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover {

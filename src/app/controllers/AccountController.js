@@ -4,15 +4,15 @@ const User = require('../models/user.js');
 
 class AccountController {
 
-    // [GET] /
+    // [GET] /account/login
     login(req, res) {
-        const messages = req.flash('error')
+        const messages = req.flash('error');
         res.render('account/login', {
             messages: messages
         });
     }
 
-    // [GET] /
+    // [GET] /account/register
     register(req, res) {
         res.render('account/register');
     }
@@ -25,14 +25,8 @@ class AccountController {
     // [GET] /account/setting
     async changePassword(req, res) {
         if (req.isAuthenticated()) {
-            const user = await User.find({ 'info.firstname': req.session.User.name });
-            const username = user.map(user => user = user.toObject());
-            const role = username[0].role === 'admin' ? 'admin' : '';
             try {
-                res.render('account/change-password', {
-                    role: role,
-                    user: username[0].info,
-                });
+                res.render('account/change-password');
             } catch (err) {
                 if (err)
                     next(err);
@@ -52,16 +46,11 @@ class AccountController {
     async sendChangePassword(req, res) {
         let input = req.body;
 
-        const user = await User.find({ 'info.firstname': req.session.User.name });
-        const username = user.map(user => user = user.toObject());
-        const role = username[0].role === 'admin' ? 'admin' : '';
         // validation new password
         if (input.newPassword !== input.confirmPassword) {
             const message = 'New password and confirm password must be similar';
             return res.render('account/change-password', {
                 message,
-                role,
-                user: username[0].info,
             })
         }
 
@@ -72,9 +61,7 @@ class AccountController {
             const message = 'Wrong password';
             return res.render('account/change-password', {
                 message,
-                role,
-                user: username[0].info,
-            })
+            });
         }
         else {
             currentUser.local.password = bcrypt.hashSync(input.newPassword, 10);
@@ -82,9 +69,7 @@ class AccountController {
             const message = 'Change password succesfully';
             return res.render('account/change-password', {
                 message,
-                role,
-                user: username[0].info,
-            })
+            });
         }
     }
 }

@@ -14,10 +14,11 @@ const db = require('./config/db');
 const sortMiddleware = require('./app/middlewares/sortMiddleware');
 const setSession = require('./app/middlewares/setSession');
 const renderCart = require('./app/middlewares/renderCart');
-const { showUserInfo } = require('./app/middlewares/isLogin');
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+require('dotenv').config()
+
 /* Khai báo để sử dụng kịch bản passport */
 const passportEX = require('./config/passport/passport');
 const app = express();
@@ -31,7 +32,6 @@ app.use(express.json()); // parse application/json
 app.use(cookieParser('arsenalrobertpires'));
 app.use(setSession);
 app.use(renderCart);
-/* app.use(showUserInfo); */
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 
@@ -39,8 +39,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 //use override method
 app.use(methodOverride('_method'));
 
+<<<<<<< HEAD
 // app.use(showUserInfo)
 
+=======
+>>>>>>> d1c50de1d0fe021e3ab07a2b2d12fb2a6baf8a98
 // Use sortMiddleware
 app.use(sortMiddleware);  
 
