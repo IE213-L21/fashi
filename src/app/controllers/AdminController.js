@@ -171,7 +171,7 @@ class AdminController {
                 indexOfProductList++;
             }
         };
-
+        /* res.json(checkoutList); */
         res.render('admin/bill', {
             layout: 'admin',
             checkouts: checkoutList,

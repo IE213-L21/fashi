@@ -31,9 +31,9 @@ class ProductController {
             const page = req.query.page || 1;
             const begin = (page - 1) * productsPerPage;
             const totalPage = Math.ceil(numberOfProducts / productsPerPage);
-
+            let products;
             if (req.query.hasOwnProperty('_sort')) {
-                const products = await Product
+                products = await Product
                 .find({
                     deleted: 'false', $or: [
                         { quantityOfSizeS: { $gt: 0 } },
@@ -46,7 +46,7 @@ class ProductController {
                 .limit(productsPerPage);
             }
             else {
-                const products = await Product
+                products = await Product
                 .find({
                     deleted: 'false', $or: [
                         { quantityOfSizeS: { $gt: 0 } },
@@ -380,7 +380,6 @@ class ProductController {
             });
             indexOfProductList++;
         }
-        console.log(productList);
         for (let i = 0; i < productList.length; i++) {
             let product = await Product.findOne({ _id: productList[i].id }).lean();
             if (productList[i].size == 'S') {
