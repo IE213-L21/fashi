@@ -39,11 +39,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 //use override method
 app.use(methodOverride('_method'));
 
-<<<<<<< HEAD
-// app.use(showUserInfo)
-
-=======
->>>>>>> d1c50de1d0fe021e3ab07a2b2d12fb2a6baf8a98
 // Use sortMiddleware
 app.use(sortMiddleware);  
 
