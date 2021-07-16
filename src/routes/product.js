@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const productController = require('../app/controllers/ProductController');
+const authenticated = require('../app/middlewares/authenticated');
 
 router.get('/', productController.showAllProducts);
 router.post('/check-out/confirm', productController.confirmCheckout);
-router.get('/check-out', productController.checkOut);   
+router.get('/check-out',authenticated,productController.checkOut);   
 router.get('/shopping-cart/:sessionID', productController.shoppingCart);
 router.post('/search', productController.searchRealTime)
 router.get('/search', productController.search);
