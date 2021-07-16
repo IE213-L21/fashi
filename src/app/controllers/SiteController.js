@@ -13,7 +13,7 @@ class SiteController {
             const productPremierLeague = await Product.find({league:"Premier League"})
             const user = await User.find({'info.firstname':req.session.User.name})
             const username = user.map(user=>user=user.toObject())
-                    const role = username[0].role==='admin' ? 'admin' : ''
+            const role = username[0].role==='admin' ? 'admin' : ''
             res.render('index',{
                 laLiga:multipleMongooseToObject(productLaLiga),
                 permierLeague:multipleMongooseToObject(productPremierLeague),
